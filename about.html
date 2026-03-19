@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>About — Samaritam</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;900&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --navy: #1E2D5A;
+      --red: #C0272D;
+      --indigo: #2D2D4E;
+      --black: #111111;
+      --grey-dark: #4A4A5A;
+      --grey-mid: #8A8A9A;
+      --grey-light: #F4F4F6;
+      --white: #FFFFFF;
+      --spectrum: linear-gradient(to right, #1E2D5A, #6B2050, #C0272D);
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'DM Sans', sans-serif; background: var(--white); color: var(--black); line-height: 1.6; }
+
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      background: var(--white); border-bottom: 1px solid #E8E8EE;
+      padding: 0 5vw; height: 64px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .nav-logo img { height: 36px; display: block; }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a {
+      font-size: 0.875rem; font-weight: 500; color: var(--grey-dark);
+      text-decoration: none; letter-spacing: 0.03em; transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--black); }
+
+    .about-hero {
+      padding: 80px 5vw 48px;
+      max-width: 720px;
+      margin: 0 auto;
+    }
+
+    .eyebrow {
+      font-size: 0.72rem; letter-spacing: 0.18em; text-transform: uppercase;
+      color: var(--grey-mid); margin-bottom: 1rem; font-weight: 500;
+    }
+
+    h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2rem, 5vw, 3.2rem);
+      font-weight: 900; line-height: 1.1;
+      color: var(--black); margin-bottom: 1.5rem;
+    }
+
+    .spectrum-line {
+      width: 60px; height: 3px;
+      background: var(--spectrum);
+      margin-bottom: 2rem; border-radius: 2px;
+    }
+
+    .lead {
+      font-size: 1.05rem; color: var(--grey-dark);
+      line-height: 1.8; margin-bottom: 1.5rem; font-weight: 300;
+    }
+
+    .about-section {
+      padding: 48px 5vw;
+      max-width: 720px;
+      margin: 0 auto;
+      border-top: 1px solid #E8E8EE;
+    }
+
+    .about-section h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.4rem; font-weight: 700;
+      color: var(--black); margin-bottom: 1rem;
+    }
+
+    .about-section p {
+      font-size: 0.9rem; color: var(--grey-dark);
+      line-height: 1.8; margin-bottom: 1rem;
+    }
+
+    .name-breakdown {
+      background: var(--grey-light);
+      border-radius: 10px;
+      padding: 24px;
+      margin: 1.5rem 0;
+      display: flex;
+      gap: 24px;
+      flex-wrap: wrap;
+    }
+
+    .name-part { flex: 1; min-width: 180px; }
+    .name-word {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.6rem; font-weight: 900;
+      color: var(--indigo); margin-bottom: 4px;
+    }
+    .name-origin { font-size: 0.72rem; color: var(--grey-mid); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 4px; }
+    .name-meaning { font-size: 0.875rem; color: var(--grey-dark); }
+
+    .viraj-block {
+      background: var(--indigo);
+      color: var(--white);
+      border-radius: 10px;
+      padding: 28px;
+      margin: 1.5rem 0;
+    }
+    .viraj-block .eyebrow { color: rgba(255,255,255,0.5); }
+    .viraj-block h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.2rem; font-weight: 700; margin-bottom: 8px;
+    }
+    .viraj-block p { font-size: 0.875rem; color: rgba(255,255,255,0.8); line-height: 1.7; }
+    .viraj-apps { display: flex; gap: 12px; margin-top: 16px; flex-wrap: wrap; }
+    .viraj-app-pill {
+      background: rgba(255,255,255,0.1);
+      border: 1px solid rgba(255,255,255,0.2);
+      border-radius: 20px;
+      padding: 5px 14px;
+      font-size: 0.78rem;
+      color: rgba(255,255,255,0.9);
+    }
+
+    footer {
+      padding: 40px 5vw;
+      border-top: 1px solid #E0E0EA;
+      display: flex; align-items: center; justify-content: space-between;
+      flex-wrap: wrap; gap: 1rem;
+    }
+    .footer-brand { font-family: 'Playfair Display', serif; font-size: 0.95rem; font-weight: 600; color: var(--black); }
+    .footer-sub { font-size: 0.775rem; color: var(--grey-mid); margin-top: 4px; }
+    .footer-viraj { font-size: 0.775rem; color: var(--grey-mid); text-align: right; }
+    .footer-viraj strong { color: var(--grey-dark); font-weight: 500; }
+
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      footer { flex-direction: column; align-items: flex-start; }
+      .footer-viraj { text-align: left; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-logo" href="index.html"><img src="assets/logo.png" alt="Samaritam" /></a>
+  <ul class="nav-links">
+    <li><a href="index.html">← Analyse</a></li>
+  </ul>
+</nav>
+
+<div class="about-hero">
+  <div class="eyebrow">About Samaritam</div>
+  <h1>Truth told<br/>in balance.</h1>
+  <div class="spectrum-line"></div>
+  <p class="lead">
+    Samaritam is a free tool that analyses news articles for political bias, emotional manipulation, framing patterns, and factual integrity — grounded in peer-reviewed academic research, not opinion.
+  </p>
+  <p class="lead" style="font-size:0.925rem;">
+    Most bias-checking tools rate entire news outlets. Samaritam rates the specific article in front of you — because even a generally centrist outlet can publish a biased op-ed. The difference matters.
+  </p>
+</div>
+
+<div class="about-section">
+  <h2>The Name</h2>
+  <p>Samaritam is a compound of two Sanskrit roots, chosen to reflect exactly what the tool does.</p>
+  <div class="name-breakdown">
+    <div class="name-part">
+      <div class="name-word">Sama</div>
+      <div class="name-origin">Sanskrit</div>
+      <div class="name-meaning">Balance · Equanimity · Equal-mindedness</div>
+    </div>
+    <div class="name-part">
+      <div class="name-word">Ritam</div>
+      <div class="name-origin">Sanskrit · Vedic</div>
+      <div class="name-meaning">Cosmic truth · The natural order of things · What is real</div>
+    </div>
+  </div>
+  <p>Together: <em>balanced truth</em> — or truth in its natural, undistorted form. That is what Samaritam attempts to surface in every article it analyses.</p>
+</div>
+
+<div class="about-section">
+  <h2>The Academic Framework</h2>
+  <p>Samaritam's analysis is explicitly grounded in three bodies of peer-reviewed research. The AI is not giving its personal opinion — it is applying frameworks that have been tested and validated by independent researchers.</p>
+
+  <p><strong>Moral Foundations Theory</strong> (Jonathan Haidt, NYU) identifies six moral foundations — care, fairness, loyalty, authority, sanctity, and liberty — that underpin political thinking across cultures. Left-leaning thought tends to weight care and fairness heavily; right-leaning thought distributes weight more evenly across all six. This framework is cross-cultural, peer-reviewed, and forms the backbone of Samaritam's political lean scoring.</p>
+
+  <p><strong>The Political Compass Model</strong> separates ideology onto two independent axes — economic (state intervention vs free market) and social (progressive vs traditional). This prevents the reductive mistake of collapsing all political views onto a single left-right line.</p>
+
+  <p><strong>NLP Political Bias Research</strong> from Stanford and MIT has identified specific linguistic markers — word choice, sentence framing, rhetorical patterns — that correlate with political lean in text. Samaritam applies these findings to flag emotional language and framing patterns.</p>
+</div>
+
+<div class="about-section">
+  <h2>Project Viraj</h2>
+  <div class="viraj-block">
+    <div class="eyebrow">Built under</div>
+    <h3>Project Viraj</h3>
+    <p>Samaritam is part of Project Viraj — a personal project building free, useful, ad-free Android apps and web tools. Viraj is Sanskrit for "shining" or "radiant ruler." Every app under this umbrella is free forever, contains no ads, and collects no data.</p>
+    <div class="viraj-apps">
+      <span class="viraj-app-pill">ButterBook — Book Library</span>
+      <span class="viraj-app-pill">Senscanner — OCR Scanner</span>
+      <span class="viraj-app-pill">Samaritam — News Bias</span>
+    </div>
+  </div>
+</div>
+
+<div class="about-section">
+  <h2>A note on bias in the tool itself</h2>
+  <p>Any tool that analyses political bias has to reckon with its own potential bias. We've tried to address this by anchoring every analysis to established academic frameworks rather than the AI's own tendencies. The prompt explicitly instructs the model to apply Haidt's Moral Foundations definitions and the Political Compass axes — not to form its own judgement.</p>
+  <p>No system is perfect. If you notice systematic skewing in Samaritam's analysis, we'd genuinely like to know. The contact details are below.</p>
+</div>
+
+<div class="about-section" id="privacy">
+  <h2>Privacy & Data</h2>
+  <p>Samaritam is built with a privacy-first approach. Here is exactly what happens to your data:</p>
+  <p><strong>Article text you paste</strong> is sent to Google's Gemini API for analysis. This is necessary for the tool to work. Google's API terms apply to that transmission. Samaritam does not see, store, or log your text anywhere else.</p>
+  <p><strong>Your Sources data</strong> — outlet names and average scores — is stored entirely in your browser's localStorage. It never leaves your device. Clearing your browser data will erase it.</p>
+  <p><strong>No accounts, no tracking, no cookies, no analytics.</strong> Samaritam has no idea who you are, where you are, or what you've analysed. There is no server receiving any of this information.</p>
+</div>
+
+<div class="about-section" style="padding-bottom:0;">
+  <h2>Contact</h2>
+  <p>Built by Team Samaritam under Project Viraj. For feedback, bug reports, or questions — reach out at <strong>contactsamaritam@gmail.com</strong></p>
+</div>
+
+<footer>
+  <div>
+    <div class="footer-brand">Samaritam</div>
+    <div class="footer-sub">© 2026 Team Samaritam · Free · No Ads · No Tracking</div>
+  </div>
+  <div class="footer-viraj">
+    Made with care by <strong>Team Samaritam</strong><br/>
+    Built under <strong>Project Viraj</strong>
+  </div>
+</footer>
+
+</body>
+</html>
