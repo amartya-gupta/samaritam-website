@@ -1512,6 +1512,8 @@ function saveSource(outlet, scores) {
 
   const btn = document.getElementById('save-btn');
   if (btn) { btn.textContent = '✓ Saved'; btn.classList.add('saved'); btn.disabled = true; }
+}
+
 function saveManualSource(scores) {
   const input = document.getElementById('manual-outlet-input');
   const outlet = (input?.value || '').trim();
