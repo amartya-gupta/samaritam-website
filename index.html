@@ -1133,7 +1133,7 @@ async function runAnalysis() {
 // GEMINI API CALL (via Cloudflare Worker proxy)
 // ═══════════════════════════════════════
 async function callGeminiAnalysis(articleText, articleUrl) {
-  const WORKER_URL = 'https://samaritam.YOUR_SUBDOMAIN.workers.dev'; // Replace with your Worker URL after deployment
+  const WORKER_URL = 'https://samaritam-website.contactprojectviraj.workers.dev'; // Replace with your Worker URL after deployment
 
   const response = await fetch(WORKER_URL, {
     method: 'POST',
