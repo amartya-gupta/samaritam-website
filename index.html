@@ -69,6 +69,7 @@
     }
 
     .nav-links a:hover { color: var(--black); }
+    .nav-links a.nav-active { color: var(--black); font-weight: 500; border-bottom: 2px solid var(--indigo); padding-bottom: 2px; }
 
     /* ── HERO ── */
     .hero {
@@ -784,9 +785,11 @@
   <nav>
     <a class="nav-logo" href="#"><img src="assets/logo.png" alt="Samaritam" /></a>
     <ul class="nav-links">
-      <li><a href="#how-it-works">How it works</a></li>
-      <li><a href="#sources-page" id="nav-sources">My Sources</a></li>
-      <li><a href="about.html">About</a></li>
+      <li><a href="index.html" class="nav-active">Analyse</a></li>
+      <li><a href="how-it-works.html">How It Works</a></li>
+      <li><a href="sources.html">My Sources</a></li>
+      <li><a href="privacy.html">Privacy Policy</a></li>
+      <li><a href="contact.html">Contact Us</a></li>
     </ul>
   </nav>
 
@@ -797,7 +800,7 @@
       <h1>Every article has<br/><em>a point of view.</em><br/>Now you can see it.</h1>
       <div class="spectrum-line"></div>
       <p class="hero-manifesto">
-        Samaritam analyses any news article for political lean, emotional manipulation, framing bias, and factual integrity — grounded in peer-reviewed academic frameworks, not opinion.
+        Samaritam analyses any text — news articles, tweets, speeches, opinion pieces — for political bias, emotional manipulation, framing patterns, and factual integrity. Grounded in peer-reviewed academic frameworks, not opinion.
       </p>
 
       <!-- The Tool -->
@@ -811,7 +814,7 @@
             <textarea
               id="article-text"
               class="tool-textarea"
-              placeholder="Paste the full text of any news article here…"
+              placeholder="Paste any article, tweet, speech or text…"
             ></textarea>
           </div>
           <div id="panel-url" class="tool-panel">
@@ -823,7 +826,7 @@
             />
           </div>
           <div class="tool-footer">
-            <span class="tool-hint">Powered by Gemini · Max 10,000 characters · <a href="about.html#privacy" style="color:var(--grey-mid);text-underline-offset:2px;">Privacy notice ↗</a></span>
+            <span class="tool-hint">Powered by Gemini · Max 10,000 characters · <a href="privacy.html" style="color:var(--grey-mid);text-underline-offset:2px;">Privacy notice ↗</a></span>
             <button class="btn-analyse" id="analyse-btn" onclick="runAnalysis()">Analyse →</button>
           </div>
           <div id="char-counter" style="font-size:0.75rem;color:var(--grey-mid);text-align:right;margin-top:6px;display:none;"></div>
@@ -908,39 +911,6 @@
       </div>
     </section>
 
-    <!-- Framework -->
-    <div class="framework-strip">
-      <div class="framework-inner">
-        <div class="framework-intro">
-          <div class="section-label">Academic grounding</div>
-          <p>Samaritam's analysis is anchored in peer-reviewed research — not the AI's personal opinion. The frameworks we use have been tested across cultures and peer-reviewed by independent researchers.</p>
-        </div>
-        <div class="framework-items">
-          <div class="framework-item">
-            <div class="framework-num">01</div>
-            <div class="framework-text">
-              <h4>Moral Foundations Theory — Jonathan Haidt</h4>
-              <p>Six moral foundations that define left vs right thinking across cultures: care, fairness, loyalty, authority, sanctity, and liberty.</p>
-            </div>
-          </div>
-          <div class="framework-item">
-            <div class="framework-num">02</div>
-            <div class="framework-text">
-              <h4>Political Compass Model</h4>
-              <p>Two-axis framework that separates economic and social dimensions — because left on economics and left on social issues are not always the same thing.</p>
-            </div>
-          </div>
-          <div class="framework-item">
-            <div class="framework-num">03</div>
-            <div class="framework-text">
-              <h4>NLP Political Bias Research</h4>
-              <p>Word choice, sentence framing, and rhetorical patterns that correlate with political lean — from published research at Stanford and MIT.</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
   </main>
 
   <footer>
@@ -949,8 +919,8 @@
       <div class="footer-sub">© 2026 Team Samaritam · Free · No Ads · No Tracking</div>
     </div>
     <div class="footer-viraj">
-      Made with care by <strong>Team Samaritam</strong><br/>
-      Built under <strong>Project Viraj</strong>
+      Made with ❤️ by <strong>Team Samaritam</strong><br/>
+      Built under <a href="https://amartya-gupta.github.io/" target="_blank" rel="noopener" style="color:var(--grey-dark);font-weight:500;text-decoration:underline;text-underline-offset:2px;">Project Viraj</a>
     </div>
   </footer>
 
@@ -965,9 +935,11 @@
   <nav>
     <a class="nav-logo" href="#" onclick="showLanding()"><img src="assets/logo.png" alt="Samaritam" /></a>
     <ul class="nav-links">
-      <li><a href="#" onclick="showLanding()">← New Analysis</a></li>
-      <li><a href="#" onclick="showSources()">My Sources</a></li>
-      <li><a href="about.html">About</a></li>
+      <li><a href="#" onclick="showLanding()">Analyse</a></li>
+      <li><a href="how-it-works.html">How It Works</a></li>
+      <li><a href="sources.html">My Sources</a></li>
+      <li><a href="privacy.html">Privacy Policy</a></li>
+      <li><a href="contact.html">Contact Us</a></li>
     </ul>
   </nav>
 
@@ -1002,28 +974,6 @@
 </div><!-- end analysis-page -->
 
 
-<!-- ══════════════════════════════════════
-     SOURCES PAGE
-══════════════════════════════════════ -->
-<div id="sources-page" class="page hidden">
-
-  <nav>
-    <a class="nav-logo" href="#" onclick="showLanding()"><img src="assets/logo.png" alt="Samaritam" /></a>
-    <ul class="nav-links">
-      <li><a href="#" onclick="showLanding()">← Analyse</a></li>
-      <li><a href="about.html">About</a></li>
-    </ul>
-  </nav>
-
-  <div class="section">
-    <div class="section-label">My Sources</div>
-    <h2 class="section-title">Your personal<br/>outlet tracker.</h2>
-    <div id="sources-content"></div>
-  </div>
-
-</div><!-- end sources-page -->
-
-
 <script>
 // ═══════════════════════════════════════
 // STATE
@@ -1035,7 +985,7 @@ let sources = JSON.parse(localStorage.getItem('samaritam_sources') || '{}');
 // NAVIGATION
 // ═══════════════════════════════════════
 function showPage(id) {
-  ['landing-page','analysis-page','sources-page'].forEach(p => {
+  ['landing-page','analysis-page'].forEach(p => {
     const el = document.getElementById(p);
     el.classList.add('hidden');
     el.style.display = '';
@@ -1046,12 +996,13 @@ function showPage(id) {
   window.scrollTo(0,0);
 }
 
-function showLanding() { showPage('landing-page'); }
-function showSources() { renderSources(); showPage('sources-page'); }
-
-document.getElementById('nav-sources').addEventListener('click', function(e){
-  e.preventDefault(); showSources();
-});
+function showLanding() {
+  document.getElementById('article-text').value = '';
+  document.getElementById('article-url').value = '';
+  document.getElementById('error-msg').style.display = 'none';
+  document.getElementById('char-counter').style.display = 'none';
+  showPage('landing-page');
+}
 
 // ═══════════════════════════════════════
 // TABS
@@ -1180,7 +1131,7 @@ async function runAnalysis() {
 // GEMINI API CALL (via Cloudflare Worker proxy)
 // ═══════════════════════════════════════
 async function callGeminiAnalysis(articleText, articleUrl) {
-  const WORKER_URL = 'https://samaritam-website.contactprojectviraj.workers.dev'; 
+  const WORKER_URL = 'https://samaritam.YOUR_SUBDOMAIN.workers.dev'; // Replace with your Worker URL after deployment
 
   const response = await fetch(WORKER_URL, {
     method: 'POST',
@@ -1335,68 +1286,6 @@ function saveSource(outlet, scores) {
 
   const btn = document.getElementById('save-btn');
   if (btn) { btn.textContent = '✓ Saved'; btn.classList.add('saved'); btn.disabled = true; }
-}
-
-function renderSources() {
-  const el = document.getElementById('sources-content');
-  const keys = Object.keys(sources);
-
-  if (!keys.length) {
-    el.innerHTML = `
-      <div style="text-align:center;padding:60px 0;color:var(--grey-mid);">
-        <div style="font-family:'Playfair Display',serif;font-size:1.2rem;margin-bottom:8px;">No sources tracked yet.</div>
-        <div style="font-size:0.875rem;">Analyse an article and save the outlet to start building your tracker.</div>
-      </div>
-    `;
-    return;
-  }
-
-  const cards = keys.map(outlet => {
-    const data = sources[outlet];
-    const count = data.analyses.length;
-    const avg = key => Math.round(data.analyses.reduce((s,a) => s + (a.scores[key]?.value || 50), 0) / count);
-
-    const scores = [
-      { label: 'Political lean', left: 'Left', right: 'Right', val: avg('political_lean') },
-      { label: 'Rhetorical temp', left: 'Neutral', right: 'Charged', val: avg('rhetorical_temp') }
-    ];
-
-    return `
-      <div class="deep-card" style="margin-bottom:20px;">
-        <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:16px;">
-          <div>
-            <div style="font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:600;">${outlet}</div>
-            <div style="font-size:0.75rem;color:var(--grey-mid);margin-top:2px;">${count} article${count!==1?'s':''} analysed</div>
-          </div>
-          <button onclick="deleteSource('${outlet}')" style="background:none;border:none;color:var(--grey-mid);cursor:pointer;font-size:0.8rem;">Remove</button>
-        </div>
-        ${scores.map(s => `
-          <div style="margin-bottom:12px;">
-            <div style="display:flex;justify-content:space-between;font-size:0.78rem;color:var(--grey-mid);margin-bottom:3px;">
-              <span>${s.left}</span><span style="color:var(--black);font-weight:500">${s.label}</span><span>${s.right}</span>
-            </div>
-            <div class="result-bar-track">
-              <div class="result-bar-fill" style="width:100%"></div>
-              <div class="result-needle" style="left:${Math.max(5,Math.min(95,s.val))}%"></div>
-            </div>
-          </div>
-        `).join('')}
-      </div>
-    `;
-  }).join('');
-
-  el.innerHTML = `
-    <div style="margin-bottom:24px;font-size:0.875rem;color:var(--grey-dark);">
-      Tracking <strong>${keys.length}</strong> outlet${keys.length!==1?'s':''} based on your analyses. All data is stored locally on your device.
-    </div>
-    ${cards}
-  `;
-}
-
-function deleteSource(outlet) {
-  delete sources[outlet];
-  localStorage.setItem('samaritam_sources', JSON.stringify(sources));
-  renderSources();
 }
 </script>
 
