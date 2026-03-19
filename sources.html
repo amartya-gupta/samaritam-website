@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>My Sources — Samaritam</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;900&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --navy: #1E2D5A; --red: #C0272D; --indigo: #2D2D4E;
+      --black: #111111; --grey-dark: #4A4A5A; --grey-mid: #8A8A9A;
+      --grey-light: #F4F4F6; --white: #FFFFFF;
+      --spectrum: linear-gradient(to right, #1E2D5A, #6B2050, #C0272D);
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'DM Sans', sans-serif; background: var(--white); color: var(--black); line-height: 1.6; }
+
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      background: var(--white); border-bottom: 1px solid #E8E8EE;
+      padding: 0 5vw; height: 64px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .nav-logo img { height: 36px; display: block; }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a { font-size: 0.875rem; font-weight: 500; color: var(--grey-dark); text-decoration: none; letter-spacing: 0.03em; transition: color 0.2s; }
+    .nav-links a:hover { color: var(--black); }
+    .nav-links a.nav-active { color: var(--black); font-weight: 500; border-bottom: 2px solid var(--indigo); padding-bottom: 2px; }
+
+    .page-hero { padding: 72px 5vw 48px; max-width: 860px; margin: 0 auto; }
+    .eyebrow { font-size: 0.72rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--grey-mid); margin-bottom: 1rem; font-weight: 500; }
+    h1 { font-family: 'Playfair Display', serif; font-size: clamp(2rem, 5vw, 3rem); font-weight: 900; line-height: 1.1; color: var(--black); margin-bottom: 1.5rem; }
+    .spectrum-line { width: 60px; height: 3px; background: var(--spectrum); margin-bottom: 2rem; border-radius: 2px; }
+    .lead { font-size: 0.95rem; color: var(--grey-dark); line-height: 1.8; margin-bottom: 0.5rem; }
+
+    .sources-body { max-width: 860px; margin: 0 auto; padding: 0 5vw 80px; }
+
+    /* Empty state */
+    .empty-state { text-align: center; padding: 80px 0; }
+    .empty-state-title { font-family: 'Playfair Display', serif; font-size: 1.3rem; color: var(--black); margin-bottom: 10px; }
+    .empty-state-sub { font-size: 0.875rem; color: var(--grey-mid); margin-bottom: 28px; }
+    .btn-go-analyse { background: var(--indigo); color: var(--white); border: none; border-radius: 8px; padding: 12px 28px; font-family: 'DM Sans', sans-serif; font-size: 0.875rem; font-weight: 500; cursor: pointer; text-decoration: none; display: inline-block; transition: background 0.2s; }
+    .btn-go-analyse:hover { background: #1e1e38; }
+
+    /* Source cards */
+    .sources-meta { font-size: 0.875rem; color: var(--grey-dark); margin-bottom: 28px; }
+    .source-card { background: var(--white); border: 1px solid #E0E0EA; border-radius: 12px; padding: 24px; margin-bottom: 16px; }
+    .source-card-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 20px; }
+    .source-name { font-family: 'Playfair Display', serif; font-size: 1.15rem; font-weight: 600; color: var(--black); }
+    .source-count { font-size: 0.75rem; color: var(--grey-mid); margin-top: 3px; }
+    .btn-remove { background: none; border: none; color: var(--grey-mid); cursor: pointer; font-size: 0.8rem; font-family: 'DM Sans', sans-serif; padding: 4px 8px; border-radius: 4px; transition: all 0.2s; }
+    .btn-remove:hover { background: #FDECEA; color: var(--red); }
+
+    .score-row { margin-bottom: 14px; }
+    .score-ends { display: flex; justify-content: space-between; font-size: 0.7rem; color: var(--grey-mid); margin-bottom: 4px; }
+    .score-name-center { font-size: 0.78rem; font-weight: 500; color: var(--black); text-align: center; }
+    .score-bar-track { height: 8px; background: #E8E8EE; border-radius: 4px; position: relative; }
+    .score-bar-fill { height: 100%; border-radius: 4px; background: var(--spectrum); position: absolute; left: 0; top: 0; width: 100%; }
+    .score-needle { width: 3px; height: 16px; background: var(--indigo); border-radius: 2px; position: absolute; top: -4px; transform: translateX(-50%); }
+
+    .privacy-note { font-size: 0.775rem; color: var(--grey-mid); text-align: center; margin-top: 32px; line-height: 1.6; }
+
+    footer { padding: 40px 5vw; border-top: 1px solid #E0E0EA; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem; }
+    .footer-brand { font-family: 'Playfair Display', serif; font-size: 0.95rem; font-weight: 600; color: var(--black); }
+    .footer-sub { font-size: 0.775rem; color: var(--grey-mid); margin-top: 4px; }
+    .footer-viraj { font-size: 0.775rem; color: var(--grey-mid); text-align: right; }
+
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      footer { flex-direction: column; align-items: flex-start; }
+      .footer-viraj { text-align: left; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-logo" href="index.html"><img src="assets/logo.png" alt="Samaritam" /></a>
+  <ul class="nav-links">
+    <li><a href="index.html">Analyse</a></li>
+    <li><a href="how-it-works.html">How It Works</a></li>
+    <li><a href="sources.html" class="nav-active">My Sources</a></li>
+    <li><a href="privacy.html">Privacy Policy</a></li>
+    <li><a href="contact.html">Contact Us</a></li>
+  </ul>
+</nav>
+
+<div class="page-hero">
+  <div class="eyebrow">My Sources</div>
+  <h1>Your personal<br/>outlet tracker.</h1>
+  <div class="spectrum-line"></div>
+  <p class="lead">Every time you analyse an article and save the outlet, Samaritam builds a picture of that source over time. The scores below are averages across all articles you've analysed from each outlet.</p>
+</div>
+
+<div class="sources-body">
+  <div id="sources-content"></div>
+  <div class="privacy-note">All sources data is stored locally on your device only. It is never transmitted anywhere. <a href="privacy.html" style="color:var(--indigo);">Privacy Policy →</a></div>
+</div>
+
+<footer>
+  <div>
+    <div class="footer-brand">Samaritam</div>
+    <div class="footer-sub">© 2026 Team Samaritam · Free · No Ads · No Tracking</div>
+  </div>
+  <div class="footer-viraj">
+    Made with ❤️ by <strong>Team Samaritam</strong><br/>
+    Built under <a href="https://amartya-gupta.github.io/" target="_blank" rel="noopener" style="color:var(--grey-dark);font-weight:500;text-decoration:underline;text-underline-offset:2px;">Project Viraj</a>
+  </div>
+</footer>
+
+<script>
+const sources = JSON.parse(localStorage.getItem('samaritam_sources') || '{}');
+const keys = Object.keys(sources);
+const el = document.getElementById('sources-content');
+
+if (!keys.length) {
+  el.innerHTML = `
+    <div class="empty-state">
+      <div class="empty-state-title">No sources tracked yet.</div>
+      <div class="empty-state-sub">Analyse an article and save the outlet to start building your tracker.</div>
+      <a href="index.html" class="btn-go-analyse">Go to Analyse →</a>
+    </div>
+  `;
+} else {
+  const cards = keys.map(outlet => {
+    const data = sources[outlet];
+    const count = data.analyses.length;
+    const avg = key => Math.round(data.analyses.reduce((s, a) => s + (a.scores[key]?.value || 50), 0) / count);
+
+    const scoreRows = [
+      { label: 'Political Lean', left: 'Left', right: 'Right', val: avg('political_lean') },
+      { label: 'Economic Axis', left: 'State', right: 'Free Market', val: avg('economic_axis') },
+      { label: 'Social Axis', left: 'Progressive', right: 'Traditional', val: avg('social_axis') },
+      { label: 'Rhetorical Temp', left: 'Neutral', right: 'Charged', val: avg('rhetorical_temp') }
+    ];
+
+    return `
+      <div class="source-card">
+        <div class="source-card-header">
+          <div>
+            <div class="source-name">${outlet}</div>
+            <div class="source-count">${count} article${count !== 1 ? 's' : ''} analysed · Average scores below</div>
+          </div>
+          <button class="btn-remove" onclick="removeSource('${outlet}')">Remove</button>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;">
+          ${scoreRows.map(s => `
+            <div class="score-row">
+              <div class="score-name-center" style="margin-bottom:4px;">${s.label}</div>
+              <div class="score-ends"><span>${s.left}</span><span>${s.right}</span></div>
+              <div class="score-bar-track">
+                <div class="score-bar-fill"></div>
+                <div class="score-needle" style="left:${Math.max(5, Math.min(95, s.val))}%"></div>
+              </div>
+            </div>
+          `).join('')}
+        </div>
+      </div>
+    `;
+  }).join('');
+
+  el.innerHTML = `
+    <div class="sources-meta">Tracking <strong>${keys.length}</strong> outlet${keys.length !== 1 ? 's' : ''}.</div>
+    ${cards}
+  `;
+}
+
+function removeSource(outlet) {
+  const data = JSON.parse(localStorage.getItem('samaritam_sources') || '{}');
+  delete data[outlet];
+  localStorage.setItem('samaritam_sources', JSON.stringify(data));
+  location.reload();
+}
+</script>
+
+</body>
+</html>

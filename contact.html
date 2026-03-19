@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Contact Us — Samaritam</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;900&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --navy: #1E2D5A; --red: #C0272D; --indigo: #2D2D4E;
+      --black: #111111; --grey-dark: #4A4A5A; --grey-mid: #8A8A9A;
+      --grey-light: #F4F4F6; --white: #FFFFFF;
+      --spectrum: linear-gradient(to right, #1E2D5A, #6B2050, #C0272D);
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'DM Sans', sans-serif; background: var(--white); color: var(--black); line-height: 1.6; }
+
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      background: var(--white); border-bottom: 1px solid #E8E8EE;
+      padding: 0 5vw; height: 64px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .nav-logo img { height: 36px; display: block; }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a { font-size: 0.875rem; font-weight: 500; color: var(--grey-dark); text-decoration: none; letter-spacing: 0.03em; transition: color 0.2s; }
+    .nav-links a:hover { color: var(--black); }
+    .nav-links a.nav-active { color: var(--black); font-weight: 500; border-bottom: 2px solid var(--indigo); padding-bottom: 2px; }
+
+    .page-hero { padding: 72px 5vw 48px; max-width: 640px; margin: 0 auto; }
+    .eyebrow { font-size: 0.72rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--grey-mid); margin-bottom: 1rem; font-weight: 500; }
+    h1 { font-family: 'Playfair Display', serif; font-size: clamp(2rem, 5vw, 3rem); font-weight: 900; line-height: 1.1; color: var(--black); margin-bottom: 1.5rem; }
+    .spectrum-line { width: 60px; height: 3px; background: var(--spectrum); margin-bottom: 2rem; border-radius: 2px; }
+    .lead { font-size: 0.95rem; color: var(--grey-dark); line-height: 1.8; margin-bottom: 1rem; }
+
+    .contact-block { max-width: 640px; margin: 0 auto; padding: 0 5vw 80px; }
+
+    .reason-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 12px; margin-bottom: 40px; }
+    .reason-card { background: var(--grey-light); border-radius: 10px; padding: 18px 20px; }
+    .reason-card h4 { font-size: 0.875rem; font-weight: 500; color: var(--black); margin-bottom: 4px; }
+    .reason-card p { font-size: 0.8rem; color: var(--grey-mid); line-height: 1.55; }
+
+    .cta-form-block { background: var(--indigo); border-radius: 14px; padding: 40px; text-align: center; }
+    .cta-form-block h3 { font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 700; color: var(--white); margin-bottom: 10px; }
+    .cta-form-block p { font-size: 0.875rem; color: rgba(255,255,255,0.7); margin-bottom: 28px; line-height: 1.7; }
+    .btn-form { background: var(--white); color: var(--indigo); border: none; border-radius: 8px; padding: 14px 40px; font-family: 'DM Sans', sans-serif; font-size: 0.95rem; font-weight: 500; cursor: pointer; text-decoration: none; display: inline-block; transition: opacity 0.2s; letter-spacing: 0.02em; }
+    .btn-form:hover { opacity: 0.9; }
+    .form-note { font-size: 0.78rem; color: rgba(255,255,255,0.5); margin-top: 16px; }
+
+    footer { padding: 40px 5vw; border-top: 1px solid #E0E0EA; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem; }
+    .footer-brand { font-family: 'Playfair Display', serif; font-size: 0.95rem; font-weight: 600; color: var(--black); }
+    .footer-sub { font-size: 0.775rem; color: var(--grey-mid); margin-top: 4px; }
+    .footer-viraj { font-size: 0.775rem; color: var(--grey-mid); text-align: right; }
+
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      footer { flex-direction: column; align-items: flex-start; }
+      .footer-viraj { text-align: left; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-logo" href="index.html"><img src="assets/logo.png" alt="Samaritam" /></a>
+  <ul class="nav-links">
+    <li><a href="index.html">Analyse</a></li>
+    <li><a href="how-it-works.html">How It Works</a></li>
+    <li><a href="sources.html">My Sources</a></li>
+    <li><a href="privacy.html">Privacy Policy</a></li>
+    <li><a href="contact.html" class="nav-active">Contact Us</a></li>
+  </ul>
+</nav>
+
+<div class="page-hero">
+  <div class="eyebrow">Contact Us</div>
+  <h1>We'd love<br/>to hear from you.</h1>
+  <div class="spectrum-line"></div>
+  <p class="lead">Samaritam is a free, independent tool built by a small team. Your feedback directly shapes how it improves. Whether you've found a bug, have a feature idea, or spotted something that seems biased — tell us.</p>
+</div>
+
+<div class="contact-block">
+  <div class="reason-cards">
+    <div class="reason-card">
+      <h4>🐛 Found a bug?</h4>
+      <p>Something not working as expected? Tell us what happened and what you expected to see.</p>
+    </div>
+    <div class="reason-card">
+      <h4>💡 Feature suggestion?</h4>
+      <p>Have an idea that would make Samaritam more useful? We're listening.</p>
+    </div>
+    <div class="reason-card">
+      <h4>⚖️ Spotted bias in the tool?</h4>
+      <p>If the analysis seems to consistently lean one way, that's important. We want to know.</p>
+    </div>
+    <div class="reason-card">
+      <h4>❓ Just a question?</h4>
+      <p>Curious about how something works or want to know more about the project? Ask away.</p>
+    </div>
+  </div>
+
+  <div class="cta-form-block">
+    <h3>Send us a message</h3>
+    <p>Fill out our short form — it takes less than two minutes. We read every submission and respond where we can.</p>
+    <a href="https://forms.gle/AcALgHut3a5k2gE69" target="_blank" rel="noopener" class="btn-form">Open Contact Form →</a>
+    <div class="form-note">Opens in a new tab · Powered by Google Forms</div>
+  </div>
+</div>
+
+<footer>
+  <div>
+    <div class="footer-brand">Samaritam</div>
+    <div class="footer-sub">© 2026 Team Samaritam · Free · No Ads · No Tracking</div>
+  </div>
+  <div class="footer-viraj">
+    Made with ❤️ by <strong>Team Samaritam</strong><br/>
+    Built under <a href="https://amartya-gupta.github.io/" target="_blank" rel="noopener" style="color:var(--grey-dark);font-weight:500;text-decoration:underline;text-underline-offset:2px;">Project Viraj</a>
+  </div>
+</footer>
+
+</body>
+</html>

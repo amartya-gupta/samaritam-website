@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Privacy Policy — Samaritam</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;900&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --navy: #1E2D5A; --red: #C0272D; --indigo: #2D2D4E;
+      --black: #111111; --grey-dark: #4A4A5A; --grey-mid: #8A8A9A;
+      --grey-light: #F4F4F6; --white: #FFFFFF;
+      --spectrum: linear-gradient(to right, #1E2D5A, #6B2050, #C0272D);
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'DM Sans', sans-serif; background: var(--white); color: var(--black); line-height: 1.6; }
+
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      background: var(--white); border-bottom: 1px solid #E8E8EE;
+      padding: 0 5vw; height: 64px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .nav-logo img { height: 36px; display: block; }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a { font-size: 0.875rem; font-weight: 500; color: var(--grey-dark); text-decoration: none; letter-spacing: 0.03em; transition: color 0.2s; }
+    .nav-links a:hover { color: var(--black); }
+    .nav-links a.nav-active { color: var(--black); font-weight: 500; border-bottom: 2px solid var(--indigo); padding-bottom: 2px; }
+
+    .page-hero { padding: 72px 5vw 48px; max-width: 720px; margin: 0 auto; }
+    .eyebrow { font-size: 0.72rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--grey-mid); margin-bottom: 1rem; font-weight: 500; }
+    h1 { font-family: 'Playfair Display', serif; font-size: clamp(2rem, 5vw, 3rem); font-weight: 900; line-height: 1.1; color: var(--black); margin-bottom: 1.5rem; }
+    .spectrum-line { width: 60px; height: 3px; background: var(--spectrum); margin-bottom: 2rem; border-radius: 2px; }
+    .lead { font-size: 0.95rem; color: var(--grey-dark); line-height: 1.8; margin-bottom: 1rem; }
+
+    .content-section { padding: 40px 5vw; max-width: 720px; margin: 0 auto; border-top: 1px solid #E8E8EE; }
+    .content-section h2 { font-family: 'Playfair Display', serif; font-size: 1.3rem; font-weight: 700; color: var(--black); margin-bottom: 1rem; }
+    .content-section p { font-size: 0.9rem; color: var(--grey-dark); line-height: 1.8; margin-bottom: 0.875rem; }
+
+    .privacy-card { background: var(--grey-light); border-radius: 10px; padding: 20px 24px; margin-bottom: 14px; }
+    .privacy-card h4 { font-size: 0.875rem; font-weight: 500; color: var(--black); margin-bottom: 6px; }
+    .privacy-card p { font-size: 0.85rem; color: var(--grey-dark); line-height: 1.7; margin-bottom: 0; }
+
+    .highlight-block { border-left: 3px solid var(--indigo); padding: 16px 20px; background: #F0F0F8; border-radius: 0 8px 8px 0; margin: 1.5rem 0; }
+    .highlight-block p { font-size: 0.875rem; color: var(--indigo); margin-bottom: 0; font-weight: 500; }
+
+    footer { padding: 40px 5vw; border-top: 1px solid #E0E0EA; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem; }
+    .footer-brand { font-family: 'Playfair Display', serif; font-size: 0.95rem; font-weight: 600; color: var(--black); }
+    .footer-sub { font-size: 0.775rem; color: var(--grey-mid); margin-top: 4px; }
+    .footer-viraj { font-size: 0.775rem; color: var(--grey-mid); text-align: right; }
+
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      footer { flex-direction: column; align-items: flex-start; }
+      .footer-viraj { text-align: left; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-logo" href="index.html"><img src="assets/logo.png" alt="Samaritam" /></a>
+  <ul class="nav-links">
+    <li><a href="index.html">Analyse</a></li>
+    <li><a href="how-it-works.html">How It Works</a></li>
+    <li><a href="sources.html">My Sources</a></li>
+    <li><a href="privacy.html" class="nav-active">Privacy Policy</a></li>
+    <li><a href="contact.html">Contact Us</a></li>
+  </ul>
+</nav>
+
+<div class="page-hero">
+  <div class="eyebrow">Privacy Policy</div>
+  <h1>Your data.<br/>Your device.<br/>Your control.</h1>
+  <div class="spectrum-line"></div>
+  <p class="lead">Samaritam is built with a privacy-first approach. This page explains exactly what happens to any information you provide when using the tool.</p>
+  <p class="lead" style="font-size:0.8rem;color:var(--grey-mid);">Last updated: March 2026</p>
+</div>
+
+<div class="content-section">
+  <h2>The short version</h2>
+  <div class="highlight-block">
+    <p>Samaritam does not collect, store, or track any personal information. There are no accounts, no cookies, no analytics, and no servers receiving your data. The only external service that receives any data is Google's Gemini API — and only the text you choose to analyse.</p>
+  </div>
+</div>
+
+<div class="content-section">
+  <h2>What happens to text you paste</h2>
+  <div class="privacy-card">
+    <h4>Text sent to Google Gemini API</h4>
+    <p>When you paste text and click Analyse, that text is sent to Google's Gemini API for analysis. This is the core function of the tool and cannot work otherwise. Google's <a href="https://ai.google.dev/gemini-api/terms" target="_blank" rel="noopener" style="color:var(--indigo);">API terms of service</a> apply to this transmission.</p>
+  </div>
+  <div class="privacy-card">
+    <h4>Not stored by Samaritam</h4>
+    <p>Samaritam does not store, log, or retain the text you paste. Once the analysis is returned, the text exists only in your browser session. Closing the tab removes it.</p>
+  </div>
+  <div class="privacy-card">
+    <h4>No human ever reads your text</h4>
+    <p>No member of Team Samaritam can see what you paste. There is no backend server, no database, and no logging infrastructure on our end.</p>
+  </div>
+</div>
+
+<div class="content-section">
+  <h2>My Sources tracker</h2>
+  <div class="privacy-card">
+    <h4>Stored on your device only</h4>
+    <p>When you save a news outlet to your Sources tracker, that data is stored in your browser's localStorage — a small storage area on your own device. It never leaves your device and is never transmitted anywhere.</p>
+  </div>
+  <div class="privacy-card">
+    <h4>Persists across sessions</h4>
+    <p>Closing your browser or restarting your device does not delete your Sources data. It persists until you manually clear it using the Remove button in My Sources, or until you clear your browser's site data.</p>
+  </div>
+  <div class="privacy-card">
+    <h4>Storage size</h4>
+    <p>A full year of daily analyses would use less than 1MB of localStorage. This is negligible — browsers typically allocate 5–10MB per site. It will not noticeably affect your device.</p>
+  </div>
+</div>
+
+<div class="content-section">
+  <h2>Cookies and tracking</h2>
+  <p>Samaritam uses no cookies, no analytics, no tracking pixels, and no third-party scripts other than Google Fonts (for typography). We do not know who you are, where you are, or what you have analysed.</p>
+</div>
+
+<div class="content-section">
+  <h2>Third-party services</h2>
+  <div class="privacy-card">
+    <h4>Google Gemini API</h4>
+    <p>Used to perform the bias analysis. Text you paste is transmitted to Google's servers. See <a href="https://ai.google.dev/gemini-api/terms" target="_blank" rel="noopener" style="color:var(--indigo);">Google's Gemini API terms</a>.</p>
+  </div>
+  <div class="privacy-card">
+    <h4>Google Fonts</h4>
+    <p>Used to load the Playfair Display and DM Sans typefaces. Your IP address may be logged by Google as part of the font request. No personal data is shared.</p>
+  </div>
+  <div class="privacy-card">
+    <h4>GitHub Pages</h4>
+    <p>This website is hosted on GitHub Pages. GitHub may log basic access information such as IP addresses as part of standard server operation. See <a href="https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement" target="_blank" rel="noopener" style="color:var(--indigo);">GitHub's privacy policy</a>.</p>
+  </div>
+  <div class="privacy-card">
+    <h4>Cloudflare Workers</h4>
+    <p>API requests are routed through a Cloudflare Worker that acts as a secure proxy. Cloudflare may log basic request metadata. See <a href="https://www.cloudflare.com/privacypolicy/" target="_blank" rel="noopener" style="color:var(--indigo);">Cloudflare's privacy policy</a>.</p>
+  </div>
+</div>
+
+<div class="content-section" style="padding-bottom:64px;">
+  <h2>Questions</h2>
+  <p>If you have any questions about this privacy policy or how Samaritam handles data, reach out via the <a href="contact.html" style="color:var(--indigo);">Contact Us</a> page.</p>
+</div>
+
+<footer>
+  <div>
+    <div class="footer-brand">Samaritam</div>
+    <div class="footer-sub">© 2026 Team Samaritam · Free · No Ads · No Tracking</div>
+  </div>
+  <div class="footer-viraj">
+    Made with ❤️ by <strong>Team Samaritam</strong><br/>
+    Built under <a href="https://amartya-gupta.github.io/" target="_blank" rel="noopener" style="color:var(--grey-dark);font-weight:500;text-decoration:underline;text-underline-offset:2px;">Project Viraj</a>
+  </div>
+</footer>
+
+</body>
+</html>
