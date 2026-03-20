@@ -214,7 +214,7 @@ function scoreBarHTML(label, left, right, val) {
 }
 
 function sourceCardHTML(displayName, personalCount, globalCount, pl, ea, sa, rt, key, canRemove) {
-  const showGlobal = globalCount > personalCount;
+  const showGlobal = globalCount >= 1;
   return `
     <div class="source-card">
       <div class="source-card-header">
@@ -297,8 +297,7 @@ async function renderMySources(user) {
         }
       } catch(e) {}
 
-      return sourceCardHTML(data.displayName, pc, gc, avg(g_pl, gc), avg(g_ea, gc), avg(g_sa, gc), avg(g_rt, gc), key, true);
-    }));
+      return sourceCardHTML(data.displayName, pc, gc, avg(g_pl, gc), avg(g_ea, gc), avg(g_sa, gc), avg(g_rt, gc), key, true);    }));
 
     el.innerHTML = `<div class="sources-meta">Tracking <strong>${snap.size}</strong> outlet${snap.size !== 1 ? 's' : ''}. Scores show global averages.</div>${cards.join('')}`;
 
