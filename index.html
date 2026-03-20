@@ -1533,24 +1533,31 @@ function highlightChargedWords(words) {
 // ═══════════════════════════════════════
 async function saveSource(displayName, scores) {
   const key = normaliseOutlet(displayName);
+  const btn = document.getElementById('save-btn');
+
+  // Lock button immediately to prevent double saves
+  if (btn) { btn.textContent = 'Saving…'; btn.disabled = true; btn.style.opacity = '0.7'; }
 
   try {
     if (currentUser && window._db) {
-      // Signed in — save to Firestore
       await window._saveToFirestore(key, displayName, scores);
     } else {
-      // Guest — save to localStorage
       saveToLocalStorage(key, displayName, scores);
-      // Show backup banner
       showBackupBanner();
     }
-    // Mark button as saved
-    const btn = document.getElementById('save-btn');
-    if (btn) { btn.textContent = '✓ Saved'; btn.classList.add('saved'); btn.disabled = true; }
+    // Only show confirmed after write resolves
+    const saveContainer = document.getElementById('save-source-container');
+    if (saveContainer) {
+      saveContainer.innerHTML = `
+        <div class="save-source-banner" style="background:#E6F4EA;border-color:#A8D5B5;">
+          <span class="save-source-text" style="color:#2E7D32;">✓ <strong>${displayName}</strong> saved to your Sources tracker.</span>
+          <a href="sources.html" style="font-size:0.8rem;color:#2E7D32;font-weight:500;text-decoration:none;white-space:nowrap;">View My Sources →</a>
+        </div>
+      `;
+    }
   } catch (err) {
     console.error('Save failed:', err);
-    const btn = document.getElementById('save-btn');
-    if (btn) { btn.textContent = 'Save failed — try again'; }
+    if (btn) { btn.textContent = 'Save failed — try again'; btn.disabled = false; btn.style.opacity = '1'; }
   }
 }
 
@@ -1684,11 +1691,21 @@ async function migrateLocalStorage(uid) {
 
   for (const key of keys) {
     const outlet = local[key];
-    for (const analysis of outlet.analyses) {
-      try {
-        await window._saveToFirestore(key, outlet.displayName, analysis.scores);
-      } catch(e) { /* skip failed migrations */ }
-    }
+    // Check if this outlet already exists in Firestore before migrating
+    try {
+      const userRef = doc(db, 'users', uid, 'outlets', key);
+      const userSnap = await getDoc(userRef);
+      if (userSnap.exists()) {
+        // Already in Firestore — skip migration for this outlet to avoid duplicates
+        continue;
+      }
+      // Not in Firestore yet — safe to migrate
+      for (const analysis of outlet.analyses) {
+        try {
+          await window._saveToFirestore(key, outlet.displayName, analysis.scores);
+        } catch(e) { /* skip individual failed migrations */ }
+      }
+    } catch(e) { /* skip failed checks */ }
   }
   localStorage.removeItem('samaritam_sources_v2');
 }
