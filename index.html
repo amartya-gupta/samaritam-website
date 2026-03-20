@@ -888,6 +888,50 @@
       background: #2E7D32;
       cursor: default;
     }
+
+    /* ── AUTH ── */
+    .btn-signin {
+      display: flex; align-items: center; gap: 8px;
+      background: var(--white); border: 1px solid #E0E0EA;
+      border-radius: 8px; padding: 7px 14px;
+      font-family: 'DM Sans', sans-serif; font-size: 0.8rem;
+      font-weight: 500; color: var(--grey-dark); cursor: pointer;
+      transition: all 0.2s; white-space: nowrap;
+    }
+    .btn-signin:hover { border-color: var(--indigo); color: var(--black); }
+    .btn-signout {
+      background: none; border: none; font-family: 'DM Sans', sans-serif;
+      font-size: 0.8rem; color: var(--grey-mid); cursor: pointer;
+      padding: 4px 8px; border-radius: 4px; transition: color 0.2s;
+    }
+    .btn-signout:hover { color: var(--red); }
+    .auth-user {
+      display: flex; align-items: center; gap: 8px;
+      font-size: 0.8rem; color: var(--grey-dark);
+    }
+    .auth-avatar {
+      width: 28px; height: 28px; border-radius: 50%;
+      background: var(--indigo); color: var(--white);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.75rem; font-weight: 600; overflow: hidden;
+    }
+    .auth-avatar img { width: 100%; height: 100%; object-fit: cover; }
+    #auth-container { display: flex; align-items: center; gap: 8px; }
+
+    .backup-banner {
+      background: #F0F0F8; border: 1px solid #D0D0E8;
+      border-radius: 8px; padding: 10px 16px;
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 12px; margin-top: 16px; flex-wrap: wrap;
+    }
+    .backup-banner-text { font-size: 0.8rem; color: var(--indigo); }
+    .btn-backup-signin {
+      background: var(--indigo); color: var(--white); border: none;
+      border-radius: 6px; padding: 6px 14px; font-family: 'DM Sans', sans-serif;
+      font-size: 0.78rem; font-weight: 500; cursor: pointer; transition: background 0.2s;
+      white-space: nowrap;
+    }
+    .btn-backup-signin:hover { background: #1e1e38; }
   </style>
 </head>
 <body>
@@ -909,6 +953,16 @@
     <button class="hamburger" id="hamburger" onclick="toggleMenu()" aria-label="Menu">
       <span></span><span></span><span></span>
     </button>
+    <div id="auth-container" style="margin-left:1rem;">
+      <button class="btn-signin" id="btn-signin" onclick="signInWithGoogle()" style="display:none;">
+        <svg width="16" height="16" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
+        Sign in
+      </button>
+      <div class="auth-user" id="auth-user-info" style="display:none;">
+        <div class="auth-avatar" id="auth-avatar"></div>
+        <button class="btn-signout" onclick="signOutUser()">Sign out</button>
+      </div>
+    </div>
   </nav>
   <div class="mobile-menu" id="mobile-menu">
     <a href="index.html" class="nav-active">Analyse</a>
@@ -1092,6 +1146,16 @@
     <button class="hamburger" onclick="toggleMenu()" aria-label="Menu">
       <span></span><span></span><span></span>
     </button>
+    <div id="auth-container-2" style="margin-left:1rem;">
+      <button class="btn-signin" id="btn-signin-2" onclick="signInWithGoogle()" style="display:none;">
+        <svg width="16" height="16" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
+        Sign in
+      </button>
+      <div class="auth-user" id="auth-user-info-2" style="display:none;">
+        <div class="auth-avatar" id="auth-avatar-2"></div>
+        <button class="btn-signout" onclick="signOutUser()">Sign out</button>
+      </div>
+    </div>
   </nav>
 
   <div class="analysis-layout">
@@ -1143,7 +1207,18 @@
 // STATE
 // ═══════════════════════════════════════
 let currentTab = 'text';
-let sources = JSON.parse(localStorage.getItem('samaritam_sources') || '{}');
+let currentUser = null; // set by Firebase auth listener
+
+// ═══════════════════════════════════════
+// OUTLET NORMALISATION (Option C+A)
+// ═══════════════════════════════════════
+function normaliseOutlet(name) {
+  return name.toLowerCase().trim()
+    .replace(/^the\s+/i, '')
+    .replace(/\s+/g, ' ')
+    .replace(/[^a-z0-9\s]/g, '')
+    .trim();
+}
 
 // ═══════════════════════════════════════
 // NAVIGATION
@@ -1184,12 +1259,11 @@ function switchTab(tab) {
 // ═══════════════════════════════════════
 // RATE LIMITING
 // ═══════════════════════════════════════
-const RATE_LIMIT_MS = 15000; // 15 seconds between requests
+const RATE_LIMIT_MS = 15000;
 const MAX_CHARS = 10000;
 let lastRequestTime = 0;
 let isAnalysing = false;
 
-// Live character counter
 document.addEventListener('DOMContentLoaded', () => {
   const ta = document.getElementById('article-text');
   const counter = document.getElementById('char-counter');
@@ -1211,10 +1285,8 @@ async function runAnalysis() {
   const btn = document.getElementById('analyse-btn');
   errorEl.style.display = 'none';
 
-  // Block if already analysing
   if (isAnalysing) return;
 
-  // Rate limit check
   const now = Date.now();
   const timeSinceLast = now - lastRequestTime;
   if (lastRequestTime && timeSinceLast < RATE_LIMIT_MS) {
@@ -1254,22 +1326,16 @@ async function runAnalysis() {
     articleText = `[Article from URL: ${articleUrl}]\n\nNote: For best results, paste the article text directly.`;
   }
 
-  // Lock button and set state
   isAnalysing = true;
   lastRequestTime = Date.now();
   btn.textContent = 'Analysing…';
   btn.disabled = true;
   btn.style.opacity = '0.7';
 
-  // Show analysis page
   showPage('analysis-page');
   document.getElementById('analysis-page').style.display = 'flex';
   document.getElementById('analysis-page').style.flexDirection = 'column';
-
-  // Show article (trimmed display)
   document.getElementById('article-display').textContent = articleText.slice(0, MAX_CHARS);
-
-  // Show loading
   document.getElementById('results-loading').style.display = 'flex';
   document.getElementById('results-content').style.display = 'none';
   document.getElementById('results-error').style.display = 'none';
@@ -1285,7 +1351,6 @@ async function runAnalysis() {
     errEl.textContent = 'Analysis failed: ' + (err.message || 'Unknown error. Please try again.');
     errEl.style.display = 'block';
   } finally {
-    // Always unlock button
     isAnalysing = false;
     btn.textContent = 'Analyse →';
     btn.disabled = false;
@@ -1294,28 +1359,22 @@ async function runAnalysis() {
 }
 
 // ═══════════════════════════════════════
-// GEMINI API CALL (via Cloudflare Worker proxy)
+// GEMINI API CALL
 // ═══════════════════════════════════════
 async function callGeminiAnalysis(articleText, articleUrl) {
-  const WORKER_URL = 'https://samaritam-website.contactprojectviraj.workers.dev'; 
-
+  const WORKER_URL = 'https://samaritam-website.contactprojectviraj.workers.dev';
   const response = await fetch(WORKER_URL, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ articleText: articleText.slice(0, 10000) })
   });
-
   const data = await response.json();
-
-  if (!response.ok) {
-    throw new Error(data?.error || `Request failed with status ${response.status}`);
-  }
-
+  if (!response.ok) throw new Error(data?.error || `Request failed with status ${response.status}`);
   return data;
 }
 
 // ═══════════════════════════════════════
-// LOADING STEPS ANIMATION
+// LOADING STEPS
 // ═══════════════════════════════════════
 let loadingInterval = null;
 
@@ -1328,9 +1387,7 @@ function startLoadingSteps() {
       const el = document.getElementById(steps[i]);
       if (el) el.classList.add('visible');
       i++;
-    } else {
-      clearInterval(loadingInterval);
-    }
+    } else { clearInterval(loadingInterval); }
   }, 1800);
 }
 
@@ -1369,12 +1426,9 @@ function renderResults(data, articleUrl) {
   const scoresEl = document.getElementById('spectrum-scores-container');
   scoresEl.innerHTML = scoresConfig.map(cfg => {
     const s = data.scores[cfg.key];
-    const pct = Math.max(5, Math.min(95, s.value));
     return `
       <div class="result-score-row">
-        <div class="result-score-header">
-          <span class="result-score-name">${s.label}</span>
-        </div>
+        <div class="result-score-header"><span class="result-score-name">${s.label}</span></div>
         <div class="result-score-ends"><span>${cfg.left}</span><span>${cfg.right}</span></div>
         <div class="result-bar-track">
           <div class="result-bar-fill" style="width:100%"></div>
@@ -1385,7 +1439,6 @@ function renderResults(data, articleUrl) {
     `;
   }).join('');
 
-  // Animate needles after paint
   requestAnimationFrame(() => {
     setTimeout(() => {
       scoresConfig.forEach(cfg => {
@@ -1399,35 +1452,21 @@ function renderResults(data, articleUrl) {
 
   // Deep reads
   const dr = data.deep_reads;
-  const verdictClass = {
-    'Matched': 'verdict-match',
-    'Mild Mismatch': 'verdict-mild',
-    'Significant Mismatch': 'verdict-mismatch'
-  };
-
+  const verdictClass = { 'Matched': 'verdict-match', 'Mild Mismatch': 'verdict-mild', 'Significant Mismatch': 'verdict-mismatch' };
   const flaggedWords = (dr.emotional_language.flagged_words || []).join(', ');
 
   document.getElementById('deep-reads-container').innerHTML = `
     <div class="deep-card">
-      <div class="deep-card-header">
-        <div class="deep-card-dot" style="background:#C0272D"></div>
-        <h4>Emotional Language</h4>
-      </div>
+      <div class="deep-card-header"><div class="deep-card-dot" style="background:#C0272D"></div><h4>Emotional Language</h4></div>
       <p>${dr.emotional_language.summary}</p>
       ${flaggedWords ? `<p style="margin-top:8px;font-size:0.78rem;color:var(--grey-mid);">Flagged: <em>${flaggedWords}</em></p>` : ''}
     </div>
     <div class="deep-card">
-      <div class="deep-card-header">
-        <div class="deep-card-dot" style="background:#1E2D5A"></div>
-        <h4>Framing Bias</h4>
-      </div>
+      <div class="deep-card-header"><div class="deep-card-dot" style="background:#1E2D5A"></div><h4>Framing Bias</h4></div>
       <p>${dr.framing_bias.summary}</p>
     </div>
     <div class="deep-card">
-      <div class="deep-card-header">
-        <div class="deep-card-dot" style="background:#2D2D4E"></div>
-        <h4>Factual Density</h4>
-      </div>
+      <div class="deep-card-header"><div class="deep-card-dot" style="background:#2D2D4E"></div><h4>Factual Density</h4></div>
       <p>${dr.factual_density.summary}</p>
       <div style="display:flex;gap:16px;margin-top:10px;">
         <div style="text-align:center;">
@@ -1441,30 +1480,24 @@ function renderResults(data, articleUrl) {
       </div>
     </div>
     <div class="deep-card">
-      <div class="deep-card-header">
-        <div class="deep-card-dot" style="background:#6B2050"></div>
-        <h4>Headline vs Body</h4>
-      </div>
+      <div class="deep-card-header"><div class="deep-card-dot" style="background:#6B2050"></div><h4>Headline vs Body</h4></div>
       <span class="verdict-pill ${verdictClass[dr.headline_body.verdict] || 'verdict-match'}">${dr.headline_body.verdict}</span>
       <p>${dr.headline_body.summary}</p>
     </div>
   `;
 
-  // Highlight charged words
-  if (dr.emotional_language.flagged_words?.length) {
-    highlightChargedWords(dr.emotional_language.flagged_words);
-  }
+  if (dr.emotional_language.flagged_words?.length) highlightChargedWords(dr.emotional_language.flagged_words);
 
-  // Save source banner — with manual input if outlet not detected
+  // Save source banner
   const outlet = data.outlet;
   const saveContainer = document.getElementById('save-source-container');
+  const scoresJson = JSON.stringify(data.scores).replace(/"/g,'&quot;');
+
   if (outlet) {
     saveContainer.innerHTML = `
       <div class="save-source-banner">
         <span class="save-source-text">Add <strong>${outlet}</strong> to your Sources tracker?</span>
-        <button class="btn-save-source" id="save-btn" onclick="saveSource('${outlet}', ${JSON.stringify(data.scores).replace(/"/g,'&quot;')})">
-          + Add to Sources
-        </button>
+        <button class="btn-save-source" id="save-btn" onclick="saveSource('${outlet}', ${scoresJson})">+ Add to Sources</button>
       </div>
     `;
   } else {
@@ -1474,9 +1507,7 @@ function renderResults(data, articleUrl) {
         <div style="display:flex;gap:8px;width:100%;flex-wrap:wrap;">
           <input id="manual-outlet-input" type="text" placeholder="e.g. The Guardian, BBC News…"
             style="flex:1;min-width:160px;border:1px solid #E0E0EA;border-radius:6px;padding:7px 12px;font-family:'DM Sans',sans-serif;font-size:0.82rem;outline:none;" />
-          <button class="btn-save-source" onclick="saveManualSource(${JSON.stringify(data.scores).replace(/"/g,'&quot;')})">
-            + Add to Sources
-          </button>
+          <button class="btn-save-source" onclick="saveManualSource(${scoresJson})">+ Add to Sources</button>
         </div>
       </div>
     `;
@@ -1498,27 +1529,57 @@ function highlightChargedWords(words) {
 }
 
 // ═══════════════════════════════════════
-// SOURCES
+// SAVE SOURCE — Firebase or localStorage
 // ═══════════════════════════════════════
-function saveSource(outlet, scores) {
-  if (!sources[outlet]) {
-    sources[outlet] = { analyses: [], added: new Date().toISOString() };
-  }
-  sources[outlet].analyses.push({
-    date: new Date().toISOString(),
-    scores: scores
-  });
-  localStorage.setItem('samaritam_sources', JSON.stringify(sources));
+async function saveSource(displayName, scores) {
+  const key = normaliseOutlet(displayName);
 
-  const btn = document.getElementById('save-btn');
-  if (btn) { btn.textContent = '✓ Saved'; btn.classList.add('saved'); btn.disabled = true; }
+  try {
+    if (currentUser && window._db) {
+      // Signed in — save to Firestore
+      await window._saveToFirestore(key, displayName, scores);
+    } else {
+      // Guest — save to localStorage
+      saveToLocalStorage(key, displayName, scores);
+      // Show backup banner
+      showBackupBanner();
+    }
+    // Mark button as saved
+    const btn = document.getElementById('save-btn');
+    if (btn) { btn.textContent = '✓ Saved'; btn.classList.add('saved'); btn.disabled = true; }
+  } catch (err) {
+    console.error('Save failed:', err);
+    const btn = document.getElementById('save-btn');
+    if (btn) { btn.textContent = 'Save failed — try again'; }
+  }
 }
 
-function saveManualSource(scores) {
+function saveToLocalStorage(key, displayName, scores) {
+  const data = JSON.parse(localStorage.getItem('samaritam_sources_v2') || '{}');
+  if (!data[key]) data[key] = { displayName, analyses: [] };
+  data[key].analyses.push({ date: new Date().toISOString(), scores });
+  localStorage.setItem('samaritam_sources_v2', JSON.stringify(data));
+}
+
+function showBackupBanner() {
+  const existing = document.getElementById('backup-banner');
+  if (existing) return;
+  const container = document.getElementById('save-source-container');
+  const banner = document.createElement('div');
+  banner.id = 'backup-banner';
+  banner.className = 'backup-banner';
+  banner.innerHTML = `
+    <span class="backup-banner-text">☁️ Sign in to back up your Sources across devices and prevent data loss.</span>
+    <button class="btn-backup-signin" onclick="signInWithGoogle()">Sign in with Google</button>
+  `;
+  container.appendChild(banner);
+}
+
+async function saveManualSource(scores) {
   const input = document.getElementById('manual-outlet-input');
   const outlet = (input?.value || '').trim();
-  if (!outlet) { input.style.borderColor = 'var(--red)'; return; }
-  saveSource(outlet, scores);
+  if (!outlet) { if(input) input.style.borderColor = 'var(--red)'; return; }
+  await saveSource(outlet, scores);
   const btn = input.nextElementSibling;
   if (btn) { btn.textContent = '✓ Saved'; btn.classList.add('saved'); btn.disabled = true; }
   input.disabled = true;
@@ -1535,6 +1596,160 @@ function toggleMenu() {
     menu.classList.toggle('open');
   }
 }
+</script>
+
+<!-- ═══════════════════════════════════════
+     FIREBASE MODULE
+═══════════════════════════════════════ -->
+<script type="module">
+import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js';
+import { getAuth, GoogleAuthProvider, signInWithPopup, signOut, onAuthStateChanged }
+  from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js';
+import { getFirestore, doc, getDoc, setDoc, updateDoc, increment, collection, getDocs }
+  from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js';
+
+const firebaseConfig = {
+  apiKey: "AIzaSyBUuNCxWVEg04oq5o4-XcnFemwWY4eey8Y",
+  authDomain: "samaritam-f5a10.firebaseapp.com",
+  projectId: "samaritam-f5a10",
+  storageBucket: "samaritam-f5a10.firebasestorage.app",
+  messagingSenderId: "259918103602",
+  appId: "1:259918103602:web:9e3c1761465adfb8a6e82b"
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
+window._db = db;
+
+// ── Save to Firestore ──
+window._saveToFirestore = async function(key, displayName, scores) {
+  const uid = auth.currentUser?.uid;
+  if (!uid) throw new Error('Not signed in');
+
+  const scoreValues = {
+    political_lean: scores.political_lean?.value || 50,
+    economic_axis: scores.economic_axis?.value || 50,
+    social_axis: scores.social_axis?.value || 50,
+    rhetorical_temp: scores.rhetorical_temp?.value || 50
+  };
+
+  // Update global outlet averages
+  const globalRef = doc(db, 'outlets', key);
+  const globalSnap = await getDoc(globalRef);
+  if (globalSnap.exists()) {
+    await updateDoc(globalRef, {
+      analysisCount: increment(1),
+      'totalScores.political_lean': increment(scoreValues.political_lean),
+      'totalScores.economic_axis': increment(scoreValues.economic_axis),
+      'totalScores.social_axis': increment(scoreValues.social_axis),
+      'totalScores.rhetorical_temp': increment(scoreValues.rhetorical_temp),
+      lastUpdated: new Date().toISOString()
+    });
+  } else {
+    await setDoc(globalRef, {
+      displayName,
+      analysisCount: 1,
+      totalScores: scoreValues,
+      lastUpdated: new Date().toISOString()
+    });
+  }
+
+  // Update user's personal outlet list
+  const userRef = doc(db, 'users', uid, 'outlets', key);
+  const userSnap = await getDoc(userRef);
+  if (userSnap.exists()) {
+    await updateDoc(userRef, {
+      personalCount: increment(1),
+      'personalTotalScores.political_lean': increment(scoreValues.political_lean),
+      'personalTotalScores.economic_axis': increment(scoreValues.economic_axis),
+      'personalTotalScores.social_axis': increment(scoreValues.social_axis),
+      'personalTotalScores.rhetorical_temp': increment(scoreValues.rhetorical_temp)
+    });
+  } else {
+    await setDoc(userRef, {
+      displayName,
+      personalCount: 1,
+      personalTotalScores: scoreValues,
+      addedAt: new Date().toISOString()
+    });
+  }
+};
+
+// ── Migrate localStorage to Firestore on sign-in ──
+async function migrateLocalStorage(uid) {
+  const local = JSON.parse(localStorage.getItem('samaritam_sources_v2') || '{}');
+  const keys = Object.keys(local);
+  if (!keys.length) return;
+
+  for (const key of keys) {
+    const outlet = local[key];
+    for (const analysis of outlet.analyses) {
+      try {
+        await window._saveToFirestore(key, outlet.displayName, analysis.scores);
+      } catch(e) { /* skip failed migrations */ }
+    }
+  }
+  localStorage.removeItem('samaritam_sources_v2');
+}
+
+// ── Update auth UI ──
+function updateAuthUI(user) {
+  const btnSignin = document.getElementById('btn-signin');
+  const btnSignin2 = document.getElementById('btn-signin-2');
+  const userInfo = document.getElementById('auth-user-info');
+  const userInfo2 = document.getElementById('auth-user-info-2');
+  const avatar = document.getElementById('auth-avatar');
+  const avatar2 = document.getElementById('auth-avatar-2');
+
+  if (user) {
+    if (btnSignin) btnSignin.style.display = 'none';
+    if (btnSignin2) btnSignin2.style.display = 'none';
+    if (userInfo) userInfo.style.display = 'flex';
+    if (userInfo2) userInfo2.style.display = 'flex';
+
+    const avatarHTML = user.photoURL
+      ? `<img src="${user.photoURL}" alt="${user.displayName}" />`
+      : user.displayName?.charAt(0).toUpperCase() || 'U';
+    if (avatar) avatar.innerHTML = avatarHTML;
+    if (avatar2) avatar2.innerHTML = avatarHTML;
+  } else {
+    if (btnSignin) btnSignin.style.display = 'flex';
+    if (btnSignin2) btnSignin2.style.display = 'flex';
+    if (userInfo) userInfo.style.display = 'none';
+    if (userInfo2) userInfo2.style.display = 'none';
+  }
+}
+
+// ── Auth state listener ──
+onAuthStateChanged(auth, async (user) => {
+  window.currentUser = user;
+  // Also update the non-module script's variable
+  if (typeof currentUser !== 'undefined') {
+    // eslint-disable-next-line no-global-assign
+  }
+  updateAuthUI(user);
+  if (user) await migrateLocalStorage(user.uid);
+});
+
+// ── Sign in ──
+window.signInWithGoogle = async function() {
+  try {
+    const provider = new GoogleAuthProvider();
+    await signInWithPopup(auth, provider);
+  } catch (err) {
+    console.error('Sign-in failed:', err);
+  }
+};
+
+// ── Sign out ──
+window.signOutUser = async function() {
+  try {
+    await signOut(auth);
+  } catch (err) {
+    console.error('Sign-out failed:', err);
+  }
+};
 </script>
 
 </body>
