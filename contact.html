@@ -24,6 +24,7 @@
       display: flex; align-items: center; justify-content: space-between;
     }
     .nav-logo img { height: 48px; display: block;
+      mix-blend-mode: multiply;
     }
     .nav-links { display: flex; gap: 2rem; list-style: none; }
     .nav-links a { font-size: 0.875rem; font-weight: 500; color: var(--grey-dark); text-decoration: none; letter-spacing: 0.03em; transition: color 0.2s; }
@@ -60,6 +61,15 @@
       footer { flex-direction: column; align-items: flex-start; }
       .footer-viraj { text-align: left; }
     }
+
+    .btn-signin { display: flex; align-items: center; gap: 8px; background: var(--white); border: 1px solid #E0E0EA; border-radius: 8px; padding: 7px 14px; font-family: 'DM Sans', sans-serif; font-size: 0.8rem; font-weight: 500; color: var(--grey-dark); cursor: pointer; transition: all 0.2s; white-space: nowrap; }
+    .btn-signin:hover { border-color: var(--indigo); color: var(--black); }
+    .btn-signout { background: none; border: none; font-family: 'DM Sans', sans-serif; font-size: 0.8rem; color: var(--grey-mid); cursor: pointer; padding: 4px 8px; border-radius: 4px; transition: color 0.2s; }
+    .btn-signout:hover { color: var(--red); }
+    .auth-user { display: flex; align-items: center; gap: 8px; font-size: 0.8rem; color: var(--grey-dark); }
+    .auth-avatar { width: 28px; height: 28px; border-radius: 50%; background: var(--indigo); color: var(--white); display: flex; align-items: center; justify-content: center; font-size: 0.75rem; font-weight: 600; overflow: hidden; }
+    .auth-avatar img { width: 100%; height: 100%; object-fit: cover; }
+    #auth-container { min-width: 90px; display: flex; align-items: center; justify-content: flex-end; }
   </style>
 </head>
 <body>
@@ -121,5 +131,44 @@
   </div>
 </footer>
 
+
+<script type="module">
+import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js';
+import { getAuth, GoogleAuthProvider, signInWithPopup, signOut, onAuthStateChanged }
+  from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js';
+
+const app = initializeApp({
+  apiKey: "AIzaSyBUuNCxWVEg04oq5o4-XcnFemwWY4eey8Y",
+  authDomain: "samaritam-f5a10.firebaseapp.com",
+  projectId: "samaritam-f5a10",
+  storageBucket: "samaritam-f5a10.firebasestorage.app",
+  messagingSenderId: "259918103602",
+  appId: "1:259918103602:web:9e3c1761465adfb8a6e82b"
+});
+const auth = getAuth(app);
+
+onAuthStateChanged(auth, (user) => {
+  const btnSignin = document.getElementById('btn-signin');
+  const userInfo = document.getElementById('auth-user-info');
+  const avatar = document.getElementById('auth-avatar');
+  if (user) {
+    if (btnSignin) btnSignin.style.display = 'none';
+    if (userInfo) userInfo.style.display = 'flex';
+    if (avatar) avatar.innerHTML = user.photoURL ? '<img src="' + user.photoURL + '" alt="" />' : (user.displayName?.charAt(0).toUpperCase() || 'U');
+  } else {
+    if (btnSignin) btnSignin.style.display = 'flex';
+    if (userInfo) userInfo.style.display = 'none';
+  }
+});
+
+document.getElementById('btn-signin')?.addEventListener('click', async () => {
+  try { await signInWithPopup(auth, new GoogleAuthProvider()); }
+  catch(e) { console.error(e); }
+});
+document.getElementById('btn-signout')?.addEventListener('click', async () => {
+  try { await signOut(auth); }
+  catch(e) { console.error(e); }
+});
+</script>
 </body>
 </html>
