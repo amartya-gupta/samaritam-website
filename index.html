@@ -1654,7 +1654,8 @@ async function writeUrlCooldown(url) {
 // ═══════════════════════════════════════
 // URL HASH FUNCTIONS
 // ═══════════════════════════════════════
-  // Normalise URL — strip trailing slash, lowercase, strip utm params
+async function hashUrl(url) {
+  // Normalise URL — strip trailing slash, lowercase, strip query params
   try {
     const u = new URL(url);
     u.search = ''; // strip all query params (utm, etc.)
