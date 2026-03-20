@@ -24,6 +24,7 @@
       display: flex; align-items: center; justify-content: space-between;
     }
     .nav-logo img { height: 48px; display: block;
+      mix-blend-mode: multiply;
     }
     .nav-links { display: flex; gap: 2rem; list-style: none; }
     .nav-links a { font-size: 0.875rem; font-weight: 500; color: var(--grey-dark); text-decoration: none; letter-spacing: 0.03em; transition: color 0.2s; }
@@ -57,6 +58,15 @@
       footer { flex-direction: column; align-items: flex-start; }
       .footer-viraj { text-align: left; }
     }
+
+    .btn-signin { display: flex; align-items: center; gap: 8px; background: var(--white); border: 1px solid #E0E0EA; border-radius: 8px; padding: 7px 14px; font-family: 'DM Sans', sans-serif; font-size: 0.8rem; font-weight: 500; color: var(--grey-dark); cursor: pointer; transition: all 0.2s; white-space: nowrap; }
+    .btn-signin:hover { border-color: var(--indigo); color: var(--black); }
+    .btn-signout { background: none; border: none; font-family: 'DM Sans', sans-serif; font-size: 0.8rem; color: var(--grey-mid); cursor: pointer; padding: 4px 8px; border-radius: 4px; transition: color 0.2s; }
+    .btn-signout:hover { color: var(--red); }
+    .auth-user { display: flex; align-items: center; gap: 8px; font-size: 0.8rem; color: var(--grey-dark); }
+    .auth-avatar { width: 28px; height: 28px; border-radius: 50%; background: var(--indigo); color: var(--white); display: flex; align-items: center; justify-content: center; font-size: 0.75rem; font-weight: 600; overflow: hidden; }
+    .auth-avatar img { width: 100%; height: 100%; object-fit: cover; }
+    #auth-container { min-width: 90px; display: flex; align-items: center; justify-content: flex-end; }
   </style>
 </head>
 <body>
@@ -83,7 +93,7 @@
 <div class="content-section">
   <h2>The short version</h2>
   <div class="highlight-block">
-    <p>Samaritam does not collect, store, or track any personal information. There are no accounts, no cookies, no analytics, and no servers receiving your data. The only external service that receives any data is Google's Gemini API — and only the text you choose to analyse.</p>
+    <p>Samaritam does not sell, share, or misuse your data. The only external services that receive any data are Google's Gemini API (article text for analysis) and Google Firebase (outlet names and averaged scores if you sign in). No article content is ever stored.</p>
   </div>
 </div>
 
@@ -95,33 +105,49 @@
   </div>
   <div class="privacy-card">
     <h4>Not stored by Samaritam</h4>
-    <p>Samaritam does not store, log, or retain the text you paste. Once the analysis is returned, the text exists only in your browser session. Closing the tab removes it.</p>
+    <p>Samaritam does not store, log, or retain the text you paste. Once the analysis is returned, the text exists only in your browser session. Closing the tab removes it entirely.</p>
   </div>
   <div class="privacy-card">
     <h4>No human ever reads your text</h4>
-    <p>No member of Team Samaritam can see what you paste. There is no backend server, no database, and no logging infrastructure on our end.</p>
+    <p>No member of Team Samaritam can see what you paste. Article text passes through our Cloudflare Worker proxy to reach Gemini — it is never written to any database or log.</p>
   </div>
 </div>
 
 <div class="content-section">
-  <h2>My Sources tracker</h2>
+  <h2>Google Sign-In and accounts</h2>
   <div class="privacy-card">
-    <h4>Stored on your device only</h4>
-    <p>When you save a news outlet to your Sources tracker, that data is stored in your browser's localStorage — a small storage area on your own device. It never leaves your device and is never transmitted anywhere.</p>
+    <h4>Sign-in is optional</h4>
+    <p>You can use Samaritam fully without signing in. Signing in with Google is only required if you want your Sources history backed up across devices.</p>
   </div>
   <div class="privacy-card">
-    <h4>Persists across sessions</h4>
-    <p>Closing your browser or restarting your device does not delete your Sources data. It persists until you manually clear it using the Remove button in My Sources, or until you clear your browser's site data.</p>
+    <h4>What we store when you sign in</h4>
+    <p>When you sign in and save a source, we store the outlet name and your averaged bias scores in Google Firebase Firestore under your unique user ID. We store nothing else — no name, no email, no browsing history, no article text.</p>
+  </div>
+  <div class="privacy-card">
+    <h4>Global averages</h4>
+    <p>When you save a source, your scores are also added to the global outlet averages visible to all users in the Top 10 leaderboard. These are aggregated numbers only — no individual analysis is ever attributed to you.</p>
+  </div>
+  <div class="privacy-card">
+    <h4>Deleting your data</h4>
+    <p>You can remove any outlet from your Sources tracker at any time using the Remove button. To delete your account data entirely, contact us via the <a href="contact.html" style="color:var(--indigo);">Contact Us</a> page.</p>
+  </div>
+</div>
+
+<div class="content-section">
+  <h2>My Sources tracker — guest users</h2>
+  <div class="privacy-card">
+    <h4>Stored on your device only</h4>
+    <p>If you don't sign in, outlet data is saved in your browser's localStorage. It never leaves your device. Clearing your browser data will remove it.</p>
   </div>
   <div class="privacy-card">
     <h4>Storage size</h4>
-    <p>A full year of daily analyses would use less than 1MB of localStorage. This is negligible — browsers typically allocate 5–10MB per site. It will not noticeably affect your device.</p>
+    <p>A full year of daily analyses would use less than 1MB of localStorage — negligible. It will not noticeably affect your device.</p>
   </div>
 </div>
 
 <div class="content-section">
   <h2>Cookies and tracking</h2>
-  <p>Samaritam uses no cookies, no analytics, no tracking pixels, and no third-party scripts other than Google Fonts (for typography). We do not know who you are, where you are, or what you have analysed.</p>
+  <p>Samaritam uses no advertising cookies, no analytics, and no tracking pixels. Google Firebase uses a session token to maintain your sign-in state — this is strictly functional and contains no personal information beyond your user ID.</p>
 </div>
 
 <div class="content-section">
@@ -131,12 +157,16 @@
     <p>Used to perform the bias analysis. Text you paste is transmitted to Google's servers. See <a href="https://ai.google.dev/gemini-api/terms" target="_blank" rel="noopener" style="color:var(--indigo);">Google's Gemini API terms</a>.</p>
   </div>
   <div class="privacy-card">
+    <h4>Google Firebase (Authentication + Firestore)</h4>
+    <p>Used for Google Sign-In and to store outlet scores for signed-in users. Only outlet names and averaged scores are stored. See <a href="https://firebase.google.com/support/privacy" target="_blank" rel="noopener" style="color:var(--indigo);">Firebase's privacy policy</a>.</p>
+  </div>
+  <div class="privacy-card">
     <h4>Google Fonts</h4>
-    <p>Used to load the Playfair Display and DM Sans typefaces. Your IP address may be logged by Google as part of the font request. No personal data is shared.</p>
+    <p>Used to load the Playfair Display and DM Sans typefaces. Your IP address may be logged by Google as part of the font request.</p>
   </div>
   <div class="privacy-card">
     <h4>GitHub Pages</h4>
-    <p>This website is hosted on GitHub Pages. GitHub may log basic access information such as IP addresses as part of standard server operation. See <a href="https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement" target="_blank" rel="noopener" style="color:var(--indigo);">GitHub's privacy policy</a>.</p>
+    <p>This website is hosted on GitHub Pages. GitHub may log basic access information such as IP addresses. See <a href="https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement" target="_blank" rel="noopener" style="color:var(--indigo);">GitHub's privacy policy</a>.</p>
   </div>
   <div class="privacy-card">
     <h4>Cloudflare Workers</h4>
@@ -160,5 +190,44 @@
   </div>
 </footer>
 
+
+<script type="module">
+import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js';
+import { getAuth, GoogleAuthProvider, signInWithPopup, signOut, onAuthStateChanged }
+  from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js';
+
+const app = initializeApp({
+  apiKey: "AIzaSyBUuNCxWVEg04oq5o4-XcnFemwWY4eey8Y",
+  authDomain: "samaritam-f5a10.firebaseapp.com",
+  projectId: "samaritam-f5a10",
+  storageBucket: "samaritam-f5a10.firebasestorage.app",
+  messagingSenderId: "259918103602",
+  appId: "1:259918103602:web:9e3c1761465adfb8a6e82b"
+});
+const auth = getAuth(app);
+
+onAuthStateChanged(auth, (user) => {
+  const btnSignin = document.getElementById('btn-signin');
+  const userInfo = document.getElementById('auth-user-info');
+  const avatar = document.getElementById('auth-avatar');
+  if (user) {
+    if (btnSignin) btnSignin.style.display = 'none';
+    if (userInfo) userInfo.style.display = 'flex';
+    if (avatar) avatar.innerHTML = user.photoURL ? '<img src="' + user.photoURL + '" alt="" />' : (user.displayName?.charAt(0).toUpperCase() || 'U');
+  } else {
+    if (btnSignin) btnSignin.style.display = 'flex';
+    if (userInfo) userInfo.style.display = 'none';
+  }
+});
+
+document.getElementById('btn-signin')?.addEventListener('click', async () => {
+  try { await signInWithPopup(auth, new GoogleAuthProvider()); }
+  catch(e) { console.error(e); }
+});
+document.getElementById('btn-signout')?.addEventListener('click', async () => {
+  try { await signOut(auth); }
+  catch(e) { console.error(e); }
+});
+</script>
 </body>
 </html>
