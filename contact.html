@@ -21,12 +21,12 @@
       position: sticky; top: 0; z-index: 100;
       background: var(--white); border-bottom: 1px solid #E8E8EE;
       padding: 0 5vw; height: 64px;
-      display: flex; align-items: center; justify-content: space-between;
+      display: grid; grid-template-columns: 1fr auto 1fr; align-items: center;
     }
     .nav-logo img { height: 48px; display: block;
       mix-blend-mode: multiply;
     }
-    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links { display: flex; gap: 2rem; list-style: none; justify-content: center; }
     .nav-links a { font-size: 0.875rem; font-weight: 500; color: var(--grey-dark); text-decoration: none; letter-spacing: 0.03em; transition: color 0.2s; }
     .nav-links a:hover { color: var(--black); }
     .nav-links a.nav-active { color: var(--black); font-weight: 500; border-bottom: 2px solid var(--indigo); padding-bottom: 2px; }
@@ -51,7 +51,7 @@
     .btn-form:hover { opacity: 0.9; }
     .form-note { font-size: 0.78rem; color: rgba(255,255,255,0.5); margin-top: 16px; }
 
-    footer { padding: 40px 5vw; border-top: 1px solid #E0E0EA; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem; }
+    footer { padding: 40px 5vw; border-top: 1px solid #E0E0EA; display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; flex-wrap: wrap; gap: 1rem; }
     .footer-brand { font-family: 'Playfair Display', serif; font-size: 0.95rem; font-weight: 600; color: var(--black); }
     .footer-sub { font-size: 0.775rem; color: var(--grey-mid); margin-top: 4px; }
     .footer-viraj { font-size: 0.775rem; color: var(--grey-mid); text-align: right; }
