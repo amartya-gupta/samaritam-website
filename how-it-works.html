@@ -24,6 +24,7 @@
       display: flex; align-items: center; justify-content: space-between;
     }
     .nav-logo img { height: 48px; display: block;
+      mix-blend-mode: multiply;
     }
     .nav-links { display: flex; gap: 2rem; list-style: none; }
     .nav-links a { font-size: 0.875rem; font-weight: 500; color: var(--grey-dark); text-decoration: none; letter-spacing: 0.03em; transition: color 0.2s; }
@@ -85,6 +86,15 @@
       footer { flex-direction: column; align-items: flex-start; }
       .footer-viraj { text-align: left; }
     }
+
+    .btn-signin { display: flex; align-items: center; gap: 8px; background: var(--white); border: 1px solid #E0E0EA; border-radius: 8px; padding: 7px 14px; font-family: 'DM Sans', sans-serif; font-size: 0.8rem; font-weight: 500; color: var(--grey-dark); cursor: pointer; transition: all 0.2s; white-space: nowrap; }
+    .btn-signin:hover { border-color: var(--indigo); color: var(--black); }
+    .btn-signout { background: none; border: none; font-family: 'DM Sans', sans-serif; font-size: 0.8rem; color: var(--grey-mid); cursor: pointer; padding: 4px 8px; border-radius: 4px; transition: color 0.2s; }
+    .btn-signout:hover { color: var(--red); }
+    .auth-user { display: flex; align-items: center; gap: 8px; font-size: 0.8rem; color: var(--grey-dark); }
+    .auth-avatar { width: 28px; height: 28px; border-radius: 50%; background: var(--indigo); color: var(--white); display: flex; align-items: center; justify-content: center; font-size: 0.75rem; font-weight: 600; overflow: hidden; }
+    .auth-avatar img { width: 100%; height: 100%; object-fit: cover; }
+    #auth-container { min-width: 90px; display: flex; align-items: center; justify-content: flex-end; }
   </style>
 </head>
 <body>
@@ -241,6 +251,19 @@
   <p>No system is perfect. If you notice systematic skewing in Samaritam's results, we'd genuinely like to know. Reach out via the <a href="contact.html" style="color:var(--indigo);">Contact Us</a> page.</p>
 </div>
 
+<!-- My Sources -->
+<div class="content-section">
+  <h2>My Sources — the outlet tracker</h2>
+  <p>Every time you analyse an article and save the outlet, Samaritam adds it to your personal Sources tracker. Over time this builds a picture of each outlet's typical bias profile based on your own analyses.</p>
+  <p>The scores shown in My Sources are <strong>global averages</strong> — calculated across all Samaritam users who have analysed articles from that outlet. The more people analyse, the more reliable the average becomes.</p>
+  <p>The <strong>Top 10 Global</strong> leaderboard ranks outlets by rhetorical neutrality — the sources that inform without provoking, presenting facts over emotion. It appears once an outlet has been analysed at least 10 times across the community.</p>
+  <div style="background:var(--grey-light);border-radius:10px;padding:20px 24px;margin-top:1.5rem;">
+    <div style="font-size:0.72rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--grey-mid);font-weight:500;margin-bottom:12px;">How your data is stored</div>
+    <p style="font-size:0.875rem;color:var(--grey-dark);line-height:1.7;margin-bottom:8px;">If you <strong>sign in with Google</strong>, your personal outlet list is backed up to our secure database and accessible from any device. Scores contribute to the global averages.</p>
+    <p style="font-size:0.875rem;color:var(--grey-dark);line-height:1.7;">If you <strong>don't sign in</strong>, your outlet list is saved locally in your browser. It works fully but won't survive if you clear your browser data. Your analyses still contribute to global averages.</p>
+  </div>
+</div>
+
 <div class="cta-block">
   <h3>Ready to analyse something?</h3>
   <p>Paste any article, tweet, speech or text and see what's really being said.</p>
@@ -258,5 +281,44 @@
   </div>
 </footer>
 
+
+<script type="module">
+import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js';
+import { getAuth, GoogleAuthProvider, signInWithPopup, signOut, onAuthStateChanged }
+  from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js';
+
+const app = initializeApp({
+  apiKey: "AIzaSyBUuNCxWVEg04oq5o4-XcnFemwWY4eey8Y",
+  authDomain: "samaritam-f5a10.firebaseapp.com",
+  projectId: "samaritam-f5a10",
+  storageBucket: "samaritam-f5a10.firebasestorage.app",
+  messagingSenderId: "259918103602",
+  appId: "1:259918103602:web:9e3c1761465adfb8a6e82b"
+});
+const auth = getAuth(app);
+
+onAuthStateChanged(auth, (user) => {
+  const btnSignin = document.getElementById('btn-signin');
+  const userInfo = document.getElementById('auth-user-info');
+  const avatar = document.getElementById('auth-avatar');
+  if (user) {
+    if (btnSignin) btnSignin.style.display = 'none';
+    if (userInfo) userInfo.style.display = 'flex';
+    if (avatar) avatar.innerHTML = user.photoURL ? '<img src="' + user.photoURL + '" alt="" />' : (user.displayName?.charAt(0).toUpperCase() || 'U');
+  } else {
+    if (btnSignin) btnSignin.style.display = 'flex';
+    if (userInfo) userInfo.style.display = 'none';
+  }
+});
+
+document.getElementById('btn-signin')?.addEventListener('click', async () => {
+  try { await signInWithPopup(auth, new GoogleAuthProvider()); }
+  catch(e) { console.error(e); }
+});
+document.getElementById('btn-signout')?.addEventListener('click', async () => {
+  try { await signOut(auth); }
+  catch(e) { console.error(e); }
+});
+</script>
 </body>
 </html>
