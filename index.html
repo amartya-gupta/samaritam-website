@@ -1325,7 +1325,7 @@ async function runAnalysis() {
       errorEl.style.display = 'block';
       return;
     }
-    articleText = `[Article from URL: ${articleUrl}]\n\nNote: For best results, paste the article text directly.`;
+    articleText = ''; // Worker will fetch the content
   }
 
   isAnalysing = true;
@@ -1339,7 +1339,9 @@ async function runAnalysis() {
   showPage('analysis-page');
   document.getElementById('analysis-page').style.display = 'flex';
   document.getElementById('analysis-page').style.flexDirection = 'column';
-  document.getElementById('article-display').textContent = articleText.slice(0, MAX_CHARS);
+  document.getElementById('article-display').textContent = articleUrl
+    ? `Fetching article from ${articleUrl}…`
+    : articleText.slice(0, MAX_CHARS);
   document.getElementById('results-loading').style.display = 'flex';
   document.getElementById('results-content').style.display = 'none';
   document.getElementById('results-error').style.display = 'none';
@@ -1367,11 +1369,17 @@ async function runAnalysis() {
 // ═══════════════════════════════════════
 async function callGeminiAnalysis(articleText, articleUrl) {
   const WORKER_URL = 'https://samaritam-website.contactprojectviraj.workers.dev';
+
+  const payload = articleUrl
+    ? { articleUrl }
+    : { articleText: articleText.slice(0, 10000) };
+
   const response = await fetch(WORKER_URL, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ articleText: articleText.slice(0, 10000) })
+    body: JSON.stringify(payload)
   });
+
   const data = await response.json();
   if (!response.ok) throw new Error(data?.error || `Request failed with status ${response.status}`);
   return data;
@@ -1406,6 +1414,12 @@ function renderResults(data, articleUrl) {
   stopLoadingSteps();
   document.getElementById('results-loading').style.display = 'none';
   document.getElementById('results-content').style.display = 'block';
+
+  // If Worker fetched article from URL, show the extracted text in the left panel
+  if (data._fetchedText) {
+    document.getElementById('article-display').textContent = data._fetchedText;
+    lastAnalysedText = data._fetchedText;
+  }
 
   // Outlet + headline label
   const labelEl = document.getElementById('results-article-label');
