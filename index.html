@@ -1208,7 +1208,8 @@
 // ═══════════════════════════════════════
 let currentTab = 'text';
 let currentUser = null; // set by Firebase auth listener
-let lastAnalysedText = ''; // for hashing
+let lastAnalysedText = ''; // for text hash
+let lastAnalysedUrl = ''; // for URL hash
 let wasUrlAnalysis = false; // tracks if analysis came from URL tab
 
 // ═══════════════════════════════════════
@@ -1325,6 +1326,20 @@ async function runAnalysis() {
       errorEl.style.display = 'block';
       return;
     }
+
+    // ── 1. Per-user cooldown check (15 min per URL) ──
+    const cooldownRemaining = await checkUrlCooldown(articleUrl);
+    if (cooldownRemaining > 0) {
+      const mins = Math.ceil(cooldownRemaining / 60000);
+      errorEl.textContent = `You analysed this article recently. Please wait ${mins} minute${mins !== 1 ? 's' : ''} before analysing it again.`;
+      errorEl.style.display = 'block';
+      return;
+    }
+
+    // ── 2. Global duplicate check — note result but always run analysis ──
+    // (result stored in window for use in renderResults)
+    window._urlAlreadyInGlobal = await checkUrlHash(articleUrl);
+
     articleText = ''; // Worker will fetch the content
   }
 
@@ -1332,6 +1347,7 @@ async function runAnalysis() {
   lastRequestTime = Date.now();
   wasUrlAnalysis = (currentTab === 'url');
   lastAnalysedText = articleText;
+  lastAnalysedUrl = articleUrl;
   btn.textContent = 'Analysing…';
   btn.disabled = true;
   btn.style.opacity = '0.7';
@@ -1414,6 +1430,11 @@ function renderResults(data, articleUrl) {
   stopLoadingSteps();
   document.getElementById('results-loading').style.display = 'none';
   document.getElementById('results-content').style.display = 'block';
+
+  // Write cooldown for this URL so user must wait 15 min before re-analysing
+  if (wasUrlAnalysis && lastAnalysedUrl) {
+    writeUrlCooldown(lastAnalysedUrl);
+  }
 
   // If Worker fetched article from URL, show the extracted text in the left panel
   if (data._fetchedText) {
@@ -1526,23 +1547,23 @@ function renderResults(data, articleUrl) {
       </div>
     `;
   } else {
-    // URL analysis with detected outlet — check for duplicate hash first
-    saveContainer.innerHTML = `
-      <div class="save-source-banner">
-        <span class="save-source-text">Add <strong>${outlet}</strong> to your Sources tracker?</span>
-        <button class="btn-save-source" id="save-btn" onclick="saveSource('${outlet}', ${scoresJson})">+ Add to Sources</button>
-      </div>
-    `;
-    // Async check if already analysed — update banner if duplicate found
-    checkArticleHash(lastAnalysedText).then(alreadyExists => {
-      if (alreadyExists) {
-        saveContainer.innerHTML = `
-          <div class="save-source-banner" style="background:#FFF3E0;border-color:#FFD59E;">
-            <span class="save-source-text" style="color:#E65100;">📊 This article has already been analysed and added to the global database.</span>
-          </div>
-        `;
-      }
-    });
+    // URL analysis with detected outlet
+    if (window._urlAlreadyInGlobal) {
+      // Already in global database — show analysis but no save option
+      saveContainer.innerHTML = `
+        <div class="save-source-banner" style="background:#FFF3E0;border-color:#FFD59E;">
+          <span class="save-source-text" style="color:#E65100;">📊 This article has already been analysed and added to the global database. Your analysis is shown above for your reference.</span>
+        </div>
+      `;
+    } else {
+      // First time — show save button
+      saveContainer.innerHTML = `
+        <div class="save-source-banner">
+          <span class="save-source-text">Add <strong>${outlet}</strong> to your Sources tracker?</span>
+          <button class="btn-save-source" id="save-btn" onclick="saveSource('${outlet}', ${scoresJson})">+ Add to Sources</button>
+        </div>
+      `;
+    }
   }
 }
 
@@ -1578,6 +1599,99 @@ async function hashArticle(text) {
   const hashBuffer = await crypto.subtle.digest('SHA-256', encoded);
   const hashArray = Array.from(new Uint8Array(hashBuffer));
   return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+}
+
+// ═══════════════════════════════════════
+// URL COOLDOWN (15 min per URL per user)
+// ═══════════════════════════════════════
+const URL_COOLDOWN_MS = 15 * 60 * 1000; // 15 minutes
+
+async function checkUrlCooldown(url) {
+  const hash = await hashUrl(url);
+  if (!hash) return 0;
+  const storageKey = `samaritam_cooldown_${hash}`;
+
+  // Signed-in users — check Firestore
+  if (window.currentUser && window._db) {
+    try {
+      const { doc, getDoc } = await import('https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js');
+      const snap = await getDoc(doc(window._db, 'users', window.currentUser.uid, 'cooldowns', hash));
+      if (snap.exists()) {
+        const lastTime = snap.data().lastAnalysedAt;
+        const elapsed = Date.now() - new Date(lastTime).getTime();
+        if (elapsed < URL_COOLDOWN_MS) return URL_COOLDOWN_MS - elapsed;
+      }
+    } catch(e) { return 0; }
+  } else {
+    // Guest — check localStorage
+    const stored = localStorage.getItem(storageKey);
+    if (stored) {
+      const elapsed = Date.now() - parseInt(stored);
+      if (elapsed < URL_COOLDOWN_MS) return URL_COOLDOWN_MS - elapsed;
+    }
+  }
+  return 0;
+}
+
+async function writeUrlCooldown(url) {
+  const hash = await hashUrl(url);
+  if (!hash) return;
+  const storageKey = `samaritam_cooldown_${hash}`;
+  const now = new Date().toISOString();
+
+  if (window.currentUser && window._db) {
+    try {
+      const { doc, setDoc } = await import('https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js');
+      await setDoc(doc(window._db, 'users', window.currentUser.uid, 'cooldowns', hash), {
+        lastAnalysedAt: now
+      });
+    } catch(e) { /* non-critical */ }
+  } else {
+    localStorage.setItem(storageKey, Date.now().toString());
+  }
+}
+
+// ═══════════════════════════════════════
+// URL HASH FUNCTIONS
+// ═══════════════════════════════════════
+  // Normalise URL — strip trailing slash, lowercase, strip utm params
+  try {
+    const u = new URL(url);
+    u.search = ''; // strip all query params (utm, etc.)
+    const normalised = u.toString().toLowerCase().replace(/\/$/, '');
+    const encoded = new TextEncoder().encode(normalised);
+    const hashBuffer = await crypto.subtle.digest('SHA-256', encoded);
+    const hashArray = Array.from(new Uint8Array(hashBuffer));
+    return 'url_' + hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+  } catch {
+    return null;
+  }
+}
+
+async function checkUrlHash(url) {
+  if (!window._db) return false;
+  try {
+    const hash = await hashUrl(url);
+    if (!hash) return false;
+    const { doc, getDoc } = await import('https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js');
+    const snap = await getDoc(doc(window._db, 'analysed_articles', hash));
+    return snap.exists();
+  } catch(e) {
+    return false; // fail open
+  }
+}
+
+async function writeUrlHash(url, outletKey) {
+  if (!window._db) return;
+  try {
+    const hash = await hashUrl(url);
+    if (!hash) return;
+    const { doc, setDoc } = await import('https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js');
+    await setDoc(doc(window._db, 'analysed_articles', hash), {
+      outletKey,
+      analysedAt: new Date().toISOString()
+    });
+  } catch(e) { /* non-critical */ }
 }
 
 async function checkArticleHash(text) {
@@ -1623,6 +1737,10 @@ async function saveSource(displayName, scores) {
 
     // Write article hash to prevent future duplicates
     await writeArticleHash(lastAnalysedText, key);
+    // Write URL hash if this was a URL analysis
+    if (wasUrlAnalysis && lastAnalysedUrl) {
+      await writeUrlHash(lastAnalysedUrl, key);
+    }
 
     const saveContainer = document.getElementById('save-source-container');
     if (saveContainer) {
