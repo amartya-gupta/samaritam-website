@@ -23,44 +23,68 @@
       padding: 0 5vw; height: 64px;
       display: flex; align-items: center; justify-content: space-between;
     }
-    .nav-logo img { height: 48px; display: block;
-    }
+    .nav-logo img { height: 48px; display: block; }
     .nav-links { display: flex; gap: 2rem; list-style: none; }
     .nav-links a { font-size: 0.875rem; font-weight: 500; color: var(--grey-dark); text-decoration: none; letter-spacing: 0.03em; transition: color 0.2s; }
     .nav-links a:hover { color: var(--black); }
     .nav-links a.nav-active { color: var(--black); font-weight: 500; border-bottom: 2px solid var(--indigo); padding-bottom: 2px; }
 
-    .page-hero { padding: 72px 5vw 48px; max-width: 860px; margin: 0 auto; }
+    .btn-signin { display: flex; align-items: center; gap: 8px; background: var(--white); border: 1px solid #E0E0EA; border-radius: 8px; padding: 7px 14px; font-family: 'DM Sans', sans-serif; font-size: 0.8rem; font-weight: 500; color: var(--grey-dark); cursor: pointer; transition: all 0.2s; white-space: nowrap; }
+    .btn-signin:hover { border-color: var(--indigo); color: var(--black); }
+    .btn-signout { background: none; border: none; font-family: 'DM Sans', sans-serif; font-size: 0.8rem; color: var(--grey-mid); cursor: pointer; padding: 4px 8px; border-radius: 4px; transition: color 0.2s; }
+    .btn-signout:hover { color: var(--red); }
+    .auth-user { display: flex; align-items: center; gap: 8px; font-size: 0.8rem; color: var(--grey-dark); }
+    .auth-avatar { width: 28px; height: 28px; border-radius: 50%; background: var(--indigo); color: var(--white); display: flex; align-items: center; justify-content: center; font-size: 0.75rem; font-weight: 600; overflow: hidden; }
+    .auth-avatar img { width: 100%; height: 100%; object-fit: cover; }
+
+    .page-hero { padding: 64px 5vw 40px; max-width: 860px; margin: 0 auto; }
     .eyebrow { font-size: 0.72rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--grey-mid); margin-bottom: 1rem; font-weight: 500; }
     h1 { font-family: 'Playfair Display', serif; font-size: clamp(2rem, 5vw, 3rem); font-weight: 900; line-height: 1.1; color: var(--black); margin-bottom: 1.5rem; }
-    .spectrum-line { width: 60px; height: 3px; background: var(--spectrum); margin-bottom: 2rem; border-radius: 2px; }
-    .lead { font-size: 0.95rem; color: var(--grey-dark); line-height: 1.8; margin-bottom: 0.5rem; }
+    .spectrum-line { width: 60px; height: 3px; background: var(--spectrum); margin-bottom: 1.5rem; border-radius: 2px; }
+    .lead { font-size: 0.9rem; color: var(--grey-dark); line-height: 1.8; }
 
     .sources-body { max-width: 860px; margin: 0 auto; padding: 0 5vw 80px; }
 
-    /* Empty state */
-    .empty-state { text-align: center; padding: 80px 0; }
-    .empty-state-title { font-family: 'Playfair Display', serif; font-size: 1.3rem; color: var(--black); margin-bottom: 10px; }
-    .empty-state-sub { font-size: 0.875rem; color: var(--grey-mid); margin-bottom: 28px; }
-    .btn-go-analyse { background: var(--indigo); color: var(--white); border: none; border-radius: 8px; padding: 12px 28px; font-family: 'DM Sans', sans-serif; font-size: 0.875rem; font-weight: 500; cursor: pointer; text-decoration: none; display: inline-block; transition: background 0.2s; }
+    .signin-prompt { background: #F0F0F8; border: 1px solid #D0D0E8; border-radius: 12px; padding: 28px; text-align: center; margin-bottom: 32px; }
+    .signin-prompt h3 { font-family: 'Playfair Display', serif; font-size: 1.1rem; font-weight: 700; color: var(--black); margin-bottom: 8px; }
+    .signin-prompt p { font-size: 0.875rem; color: var(--grey-dark); margin-bottom: 20px; line-height: 1.6; }
+    .btn-signin-large { display: inline-flex; align-items: center; gap: 10px; background: var(--indigo); color: var(--white); border: none; border-radius: 8px; padding: 12px 28px; font-family: 'DM Sans', sans-serif; font-size: 0.9rem; font-weight: 500; cursor: pointer; transition: background 0.2s; }
+    .btn-signin-large:hover { background: #1e1e38; }
+
+    .sources-tabs { display: flex; border-bottom: 1px solid #E0E0EA; margin-bottom: 28px; }
+    .sources-tab { padding: 12px 20px; font-family: 'DM Sans', sans-serif; font-size: 0.875rem; font-weight: 500; color: var(--grey-mid); background: none; border: none; cursor: pointer; border-bottom: 2px solid transparent; transition: all 0.2s; }
+    .sources-tab.active { color: var(--black); border-bottom-color: var(--indigo); }
+    .sources-tab:hover:not(.active) { color: var(--grey-dark); }
+
+    .empty-state { text-align: center; padding: 60px 0; }
+    .empty-state-title { font-family: 'Playfair Display', serif; font-size: 1.2rem; color: var(--black); margin-bottom: 8px; }
+    .empty-state-sub { font-size: 0.875rem; color: var(--grey-mid); margin-bottom: 24px; }
+    .btn-go-analyse { background: var(--indigo); color: var(--white); border: none; border-radius: 8px; padding: 11px 24px; font-family: 'DM Sans', sans-serif; font-size: 0.875rem; font-weight: 500; cursor: pointer; text-decoration: none; display: inline-block; transition: background 0.2s; }
     .btn-go-analyse:hover { background: #1e1e38; }
 
-    /* Source cards */
-    .sources-meta { font-size: 0.875rem; color: var(--grey-dark); margin-bottom: 28px; }
-    .source-card { background: var(--white); border: 1px solid #E0E0EA; border-radius: 12px; padding: 24px; margin-bottom: 16px; }
-    .source-card-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 20px; }
-    .source-name { font-family: 'Playfair Display', serif; font-size: 1.15rem; font-weight: 600; color: var(--black); }
-    .source-count { font-size: 0.75rem; color: var(--grey-mid); margin-top: 3px; }
+    .sources-meta { font-size: 0.875rem; color: var(--grey-dark); margin-bottom: 20px; }
+    .source-card { background: var(--white); border: 1px solid #E0E0EA; border-radius: 12px; padding: 24px; margin-bottom: 14px; }
+    .source-card-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 18px; }
+    .source-name { font-family: 'Playfair Display', serif; font-size: 1.1rem; font-weight: 600; color: var(--black); }
+    .source-meta-row { display: flex; gap: 10px; margin-top: 3px; flex-wrap: wrap; align-items: center; }
+    .source-count { font-size: 0.75rem; color: var(--grey-mid); }
+    .source-global-badge { font-size: 0.7rem; background: #E6F0FF; color: var(--navy); padding: 2px 8px; border-radius: 10px; font-weight: 500; }
     .btn-remove { background: none; border: none; color: var(--grey-mid); cursor: pointer; font-size: 0.8rem; font-family: 'DM Sans', sans-serif; padding: 4px 8px; border-radius: 4px; transition: all 0.2s; }
     .btn-remove:hover { background: #FDECEA; color: var(--red); }
 
-    .score-row { margin-bottom: 14px; }
-    .score-ends { display: flex; justify-content: space-between; font-size: 0.7rem; color: var(--grey-mid); margin-bottom: 4px; }
-    .score-name-center { font-size: 0.78rem; font-weight: 500; color: var(--black); text-align: center; }
+    .score-row { margin-bottom: 12px; }
+    .score-ends { display: flex; justify-content: space-between; font-size: 0.68rem; color: var(--grey-mid); margin-bottom: 3px; }
+    .score-name-center { font-size: 0.76rem; font-weight: 500; color: var(--black); text-align: center; margin-bottom: 3px; }
     .score-bar-track { height: 8px; background: #E8E8EE; border-radius: 4px; position: relative; }
     .score-bar-fill { height: 100%; border-radius: 4px; background: var(--spectrum); position: absolute; left: 0; top: 0; width: 100%; }
     .score-needle { width: 3px; height: 16px; background: var(--indigo); border-radius: 2px; position: absolute; top: -4px; transform: translateX(-50%); }
 
+    .leaderboard-card { background: var(--grey-light); border-radius: 12px; padding: 20px 24px; margin-bottom: 14px; }
+    .leaderboard-rank { font-family: 'Playfair Display', serif; font-size: 0.85rem; font-weight: 700; color: var(--grey-mid); margin-bottom: 2px; }
+    .leaderboard-name { font-family: 'Playfair Display', serif; font-size: 1rem; font-weight: 600; color: var(--black); margin-bottom: 4px; }
+    .leaderboard-count { font-size: 0.72rem; color: var(--grey-mid); margin-bottom: 14px; }
+
+    .loading-spinner { text-align: center; padding: 40px; color: var(--grey-mid); font-size: 0.875rem; }
     .privacy-note { font-size: 0.775rem; color: var(--grey-mid); text-align: center; margin-top: 32px; line-height: 1.6; }
 
     footer { padding: 40px 5vw; border-top: 1px solid #E0E0EA; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem; }
@@ -86,18 +110,56 @@
     <li><a href="privacy.html">Privacy Policy</a></li>
     <li><a href="contact.html">Contact Us</a></li>
   </ul>
+  <div style="display:flex;align-items:center;gap:8px;">
+    <button class="btn-signin" id="btn-signin" style="display:none;">
+      <svg width="16" height="16" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
+      Sign in
+    </button>
+    <div class="auth-user" id="auth-user-info" style="display:none;">
+      <div class="auth-avatar" id="auth-avatar"></div>
+      <button class="btn-signout" id="btn-signout">Sign out</button>
+    </div>
+  </div>
 </nav>
 
 <div class="page-hero">
   <div class="eyebrow">My Sources</div>
   <h1>Your personal<br/>outlet tracker.</h1>
   <div class="spectrum-line"></div>
-  <p class="lead">Every time you analyse an article and save the outlet, Samaritam builds a picture of that source over time. The scores below are averages across all articles you've analysed from each outlet.</p>
+  <p class="lead">Every time you analyse an article and save the outlet, Samaritam builds a picture of that source over time. Scores shown are global averages across all Samaritam users.</p>
 </div>
 
 <div class="sources-body">
-  <div id="sources-content"></div>
-  <div class="privacy-note">All sources data is stored locally on your device only. It is never transmitted anywhere. <a href="privacy.html" style="color:var(--indigo);">Privacy Policy →</a></div>
+  <div id="auth-prompt" style="display:none;">
+    <div class="signin-prompt">
+      <h3>Back up your Sources</h3>
+      <p>Sign in with Google to save your Sources history across devices. Only outlet names and averaged scores are stored — never article content.</p>
+      <button class="btn-signin-large" id="btn-signin-large">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="12" fill="white"/><path fill="#4285F4" d="M21.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
+        Sign in with Google
+      </button>
+    </div>
+  </div>
+
+  <div class="sources-tabs">
+    <button class="sources-tab active" id="tab-my">My Sources</button>
+    <button class="sources-tab" id="tab-top">Top 10 Global</button>
+  </div>
+
+  <div id="tab-content-my">
+    <div class="loading-spinner" id="loading-my">Loading your sources…</div>
+    <div id="my-sources-content"></div>
+  </div>
+
+  <div id="tab-content-top" style="display:none;">
+    <div class="loading-spinner" id="loading-top" style="display:none;">Loading global rankings…</div>
+    <div id="top-sources-content"></div>
+  </div>
+
+  <div class="privacy-note">
+    Only outlet names and averaged scores are stored — never article content or personal data.
+    <a href="privacy.html" style="color:var(--indigo);">Privacy Policy →</a>
+  </div>
 </div>
 
 <footer>
@@ -111,69 +173,257 @@
   </div>
 </footer>
 
-<script>
-const sources = JSON.parse(localStorage.getItem('samaritam_sources') || '{}');
-const keys = Object.keys(sources);
-const el = document.getElementById('sources-content');
+<script type="module">
+import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js';
+import { getAuth, GoogleAuthProvider, signInWithPopup, signOut, onAuthStateChanged }
+  from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js';
+import { getFirestore, doc, getDoc, collection, getDocs, deleteDoc, query, orderBy, limit }
+  from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js';
 
-if (!keys.length) {
-  el.innerHTML = `
-    <div class="empty-state">
-      <div class="empty-state-title">No sources tracked yet.</div>
-      <div class="empty-state-sub">Analyse an article and save the outlet to start building your tracker.</div>
-      <a href="index.html" class="btn-go-analyse">Go to Analyse →</a>
-    </div>
-  `;
-} else {
-  const cards = keys.map(outlet => {
-    const data = sources[outlet];
-    const count = data.analyses.length;
-    const avg = key => Math.round(data.analyses.reduce((s, a) => s + (a.scores[key]?.value || 50), 0) / count);
+const firebaseConfig = {
+  apiKey: "AIzaSyBUuNCxWVEg04oq5o4-XcnFemwWY4eey8Y",
+  authDomain: "samaritam-f5a10.firebaseapp.com",
+  projectId: "samaritam-f5a10",
+  storageBucket: "samaritam-f5a10.firebasestorage.app",
+  messagingSenderId: "259918103602",
+  appId: "1:259918103602:web:9e3c1761465adfb8a6e82b"
+};
 
-    const scoreRows = [
-      { label: 'Political Lean', left: 'Left', right: 'Right', val: avg('political_lean') },
-      { label: 'Economic Axis', left: 'State', right: 'Free Market', val: avg('economic_axis') },
-      { label: 'Social Axis', left: 'Progressive', right: 'Traditional', val: avg('social_axis') },
-      { label: 'Rhetorical Temp', left: 'Neutral', right: 'Charged', val: avg('rhetorical_temp') }
-    ];
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
+let currentUser = null;
+let topLoaded = false;
 
-    return `
-      <div class="source-card">
-        <div class="source-card-header">
-          <div>
-            <div class="source-name">${outlet}</div>
-            <div class="source-count">${count} article${count !== 1 ? 's' : ''} analysed · Average scores below</div>
-          </div>
-          <button class="btn-remove" onclick="removeSource('${outlet}')">Remove</button>
-        </div>
-        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;">
-          ${scoreRows.map(s => `
-            <div class="score-row">
-              <div class="score-name-center" style="margin-bottom:4px;">${s.label}</div>
-              <div class="score-ends"><span>${s.left}</span><span>${s.right}</span></div>
-              <div class="score-bar-track">
-                <div class="score-bar-fill"></div>
-                <div class="score-needle" style="left:${Math.max(5, Math.min(95, s.val))}%"></div>
-              </div>
-            </div>
-          `).join('')}
-        </div>
+// ── Helpers ──
+function avg(total, count) {
+  return count > 0 ? Math.round(total / count) : 50;
+}
+
+function scoreBarHTML(label, left, right, val) {
+  const pct = Math.max(5, Math.min(95, val));
+  return `
+    <div class="score-row">
+      <div class="score-name-center">${label}</div>
+      <div class="score-ends"><span>${left}</span><span>${right}</span></div>
+      <div class="score-bar-track">
+        <div class="score-bar-fill"></div>
+        <div class="score-needle" style="left:${pct}%"></div>
       </div>
-    `;
-  }).join('');
-
-  el.innerHTML = `
-    <div class="sources-meta">Tracking <strong>${keys.length}</strong> outlet${keys.length !== 1 ? 's' : ''}.</div>
-    ${cards}
-  `;
+    </div>`;
 }
 
-function removeSource(outlet) {
-  const data = JSON.parse(localStorage.getItem('samaritam_sources') || '{}');
-  delete data[outlet];
-  localStorage.setItem('samaritam_sources', JSON.stringify(data));
-  location.reload();
+function sourceCardHTML(displayName, personalCount, globalCount, pl, ea, sa, rt, key, canRemove) {
+  const showGlobal = globalCount > personalCount;
+  return `
+    <div class="source-card">
+      <div class="source-card-header">
+        <div>
+          <div class="source-name">${displayName}</div>
+          <div class="source-meta-row">
+            <span class="source-count">You: ${personalCount} article${personalCount !== 1 ? 's' : ''}</span>
+            ${showGlobal ? `<span class="source-global-badge">Global: ${globalCount} analyses</span>` : ''}
+          </div>
+        </div>
+        ${canRemove ? `<button class="btn-remove" data-key="${key}">Remove</button>` : ''}
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px;">
+        ${scoreBarHTML('Political Lean', 'Left', 'Right', pl)}
+        ${scoreBarHTML('Economic Axis', 'State', 'Free Market', ea)}
+        ${scoreBarHTML('Social Axis', 'Progressive', 'Traditional', sa)}
+        ${scoreBarHTML('Rhetorical Temp', 'Neutral', 'Charged', rt)}
+      </div>
+    </div>`;
 }
+
+// ── Render My Sources ──
+async function renderMySources(user) {
+  const el = document.getElementById('my-sources-content');
+  const loading = document.getElementById('loading-my');
+
+  if (!user) {
+    loading.style.display = 'none';
+    document.getElementById('auth-prompt').style.display = 'block';
+    const local = JSON.parse(localStorage.getItem('samaritam_sources_v2') || '{}');
+    const keys = Object.keys(local);
+    if (!keys.length) {
+      el.innerHTML = `<div class="empty-state"><div class="empty-state-title">No sources tracked yet.</div><div class="empty-state-sub">Analyse an article and save the outlet to start building your tracker.</div><a href="index.html" class="btn-go-analyse">Go to Analyse →</a></div>`;
+      return;
+    }
+    const cards = keys.map(key => {
+      const outlet = local[key];
+      const count = outlet.analyses.length;
+      const t = outlet.analyses.reduce((a, x) => ({
+        pl: a.pl + (x.scores.political_lean?.value || 50),
+        ea: a.ea + (x.scores.economic_axis?.value || 50),
+        sa: a.sa + (x.scores.social_axis?.value || 50),
+        rt: a.rt + (x.scores.rhetorical_temp?.value || 50)
+      }), { pl: 0, ea: 0, sa: 0, rt: 0 });
+      return sourceCardHTML(outlet.displayName, count, count, avg(t.pl, count), avg(t.ea, count), avg(t.sa, count), avg(t.rt, count), key, false);
+    }).join('');
+    el.innerHTML = `<div class="sources-meta">Tracking <strong>${keys.length}</strong> outlet${keys.length !== 1 ? 's' : ''} (saved locally — sign in to back up).</div>${cards}`;
+    return;
+  }
+
+  document.getElementById('auth-prompt').style.display = 'none';
+  try {
+    const outletsRef = collection(db, 'users', user.uid, 'outlets');
+    const snap = await getDocs(outletsRef);
+    loading.style.display = 'none';
+
+    if (snap.empty) {
+      el.innerHTML = `<div class="empty-state"><div class="empty-state-title">No sources tracked yet.</div><div class="empty-state-sub">Analyse an article and save the outlet to start building your tracker.</div><a href="index.html" class="btn-go-analyse">Go to Analyse →</a></div>`;
+      return;
+    }
+
+    const cards = await Promise.all(snap.docs.map(async (docSnap) => {
+      const key = docSnap.id;
+      const data = docSnap.data();
+      const pc = data.personalCount || 1;
+      const pt = data.personalTotalScores || {};
+
+      let gc = pc, g_pl = pt.political_lean || 50*pc, g_ea = pt.economic_axis || 50*pc,
+          g_sa = pt.social_axis || 50*pc, g_rt = pt.rhetorical_temp || 50*pc;
+
+      try {
+        const globalSnap = await getDoc(doc(db, 'outlets', key));
+        if (globalSnap.exists()) {
+          const g = globalSnap.data();
+          gc = g.analysisCount || pc;
+          g_pl = g.totalScores?.political_lean || g_pl;
+          g_ea = g.totalScores?.economic_axis || g_ea;
+          g_sa = g.totalScores?.social_axis || g_sa;
+          g_rt = g.totalScores?.rhetorical_temp || g_rt;
+        }
+      } catch(e) {}
+
+      return sourceCardHTML(data.displayName, pc, gc, avg(g_pl, gc), avg(g_ea, gc), avg(g_sa, gc), avg(g_rt, gc), key, true);
+    }));
+
+    el.innerHTML = `<div class="sources-meta">Tracking <strong>${snap.size}</strong> outlet${snap.size !== 1 ? 's' : ''}. Scores show global averages.</div>${cards.join('')}`;
+
+    // Attach remove listeners
+    el.querySelectorAll('.btn-remove').forEach(btn => {
+      btn.addEventListener('click', () => removeSource(btn.dataset.key));
+    });
+
+  } catch(err) {
+    loading.style.display = 'none';
+    el.innerHTML = `<div style="color:var(--red);font-size:0.875rem;padding:20px 0;">Failed to load sources. Please refresh.</div>`;
+  }
+}
+
+// ── Render Top 10 ──
+async function renderTopSources() {
+  if (topLoaded) return;
+  topLoaded = true;
+  const el = document.getElementById('top-sources-content');
+  const loading = document.getElementById('loading-top');
+  loading.style.display = 'block';
+
+  try {
+    const q = query(collection(db, 'outlets'), orderBy('analysisCount', 'desc'), limit(30));
+    const snap = await getDocs(q);
+    loading.style.display = 'none';
+
+    const eligible = snap.docs.filter(d => (d.data().analysisCount || 0) >= 10);
+    if (!eligible.length) {
+      el.innerHTML = `<div class="empty-state"><div class="empty-state-title">Leaderboard coming soon.</div><div class="empty-state-sub">The global leaderboard appears once outlets have been analysed by at least 10 users. Keep analysing!</div></div>`;
+      return;
+    }
+
+    const ranked = eligible
+      .map(d => ({ key: d.id, ...d.data() }))
+      .sort((a, b) => avg(a.totalScores?.rhetorical_temp || 0, a.analysisCount) - avg(b.totalScores?.rhetorical_temp || 0, b.analysisCount))
+      .slice(0, 10);
+
+    const cards = ranked.map((o, i) => {
+      const c = o.analysisCount;
+      return `
+        <div class="leaderboard-card">
+          <div class="leaderboard-rank">#${i + 1}</div>
+          <div class="leaderboard-name">${o.displayName}</div>
+          <div class="leaderboard-count">${c} analyses · Ranked by neutrality</div>
+          <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;">
+            ${scoreBarHTML('Political Lean', 'Left', 'Right', avg(o.totalScores?.political_lean || 0, c))}
+            ${scoreBarHTML('Rhetorical Temp', 'Neutral', 'Charged', avg(o.totalScores?.rhetorical_temp || 0, c))}
+          </div>
+        </div>`;
+    }).join('');
+
+    el.innerHTML = `<div class="sources-meta" style="margin-bottom:16px;">Ranked by rhetorical neutrality — outlets that inform without provoking. Minimum 10 analyses to qualify.</div>${cards}`;
+  } catch(err) {
+    loading.style.display = 'none';
+    el.innerHTML = `<div style="color:var(--red);font-size:0.875rem;padding:20px 0;">Failed to load rankings. Please refresh.</div>`;
+  }
+}
+
+// ── Remove source ──
+async function removeSource(key) {
+  if (!currentUser) {
+    const data = JSON.parse(localStorage.getItem('samaritam_sources_v2') || '{}');
+    delete data[key];
+    localStorage.setItem('samaritam_sources_v2', JSON.stringify(data));
+    location.reload();
+    return;
+  }
+  try {
+    await deleteDoc(doc(db, 'users', currentUser.uid, 'outlets', key));
+    location.reload();
+  } catch(err) { alert('Failed to remove. Please try again.'); }
+}
+
+// ── Tab switching ──
+document.getElementById('tab-my').addEventListener('click', () => {
+  document.getElementById('tab-my').classList.add('active');
+  document.getElementById('tab-top').classList.remove('active');
+  document.getElementById('tab-content-my').style.display = 'block';
+  document.getElementById('tab-content-top').style.display = 'none';
+});
+
+document.getElementById('tab-top').addEventListener('click', () => {
+  document.getElementById('tab-top').classList.add('active');
+  document.getElementById('tab-my').classList.remove('active');
+  document.getElementById('tab-content-my').style.display = 'none';
+  document.getElementById('tab-content-top').style.display = 'block';
+  renderTopSources();
+});
+
+// ── Auth UI ──
+function updateAuthUI(user) {
+  const btnSignin = document.getElementById('btn-signin');
+  const userInfo = document.getElementById('auth-user-info');
+  const avatar = document.getElementById('auth-avatar');
+  if (user) {
+    btnSignin.style.display = 'none';
+    userInfo.style.display = 'flex';
+    avatar.innerHTML = user.photoURL ? `<img src="${user.photoURL}" alt="" />` : (user.displayName?.charAt(0).toUpperCase() || 'U');
+  } else {
+    btnSignin.style.display = 'flex';
+    userInfo.style.display = 'none';
+  }
+}
+
+// ── Sign in ──
+const signInHandler = async () => {
+  try { await signInWithPopup(auth, new GoogleAuthProvider()); }
+  catch(e) { console.error(e); }
+};
+document.getElementById('btn-signin').addEventListener('click', signInHandler);
+document.getElementById('btn-signin-large').addEventListener('click', signInHandler);
+
+// ── Sign out ──
+document.getElementById('btn-signout').addEventListener('click', async () => {
+  try { await signOut(auth); location.reload(); }
+  catch(e) { console.error(e); }
+});
+
+// ── Auth state ──
+onAuthStateChanged(auth, async (user) => {
+  currentUser = user;
+  updateAuthUI(user);
+  await renderMySources(user);
+});
 </script>
 
 </body>
