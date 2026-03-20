@@ -1535,17 +1535,15 @@ async function saveSource(displayName, scores) {
   const key = normaliseOutlet(displayName);
   const btn = document.getElementById('save-btn');
 
-  // Lock button immediately to prevent double saves
   if (btn) { btn.textContent = 'Saving…'; btn.disabled = true; btn.style.opacity = '0.7'; }
 
   try {
-    if (currentUser && window._db) {
+    if (window.currentUser && window._db) {
       await window._saveToFirestore(key, displayName, scores);
     } else {
       saveToLocalStorage(key, displayName, scores);
       showBackupBanner();
     }
-    // Only show confirmed after write resolves
     const saveContainer = document.getElementById('save-source-container');
     if (saveContainer) {
       saveContainer.innerHTML = `
@@ -1740,11 +1738,9 @@ function updateAuthUI(user) {
 
 // ── Auth state listener ──
 onAuthStateChanged(auth, async (user) => {
+  // Update currentUser in the global scope so the non-module script can access it
   window.currentUser = user;
-  // Also update the non-module script's variable
-  if (typeof currentUser !== 'undefined') {
-    // eslint-disable-next-line no-global-assign
-  }
+  window._authReady = true;
   updateAuthUI(user);
   if (user) await migrateLocalStorage(user.uid);
 });
