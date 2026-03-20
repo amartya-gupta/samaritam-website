@@ -1208,6 +1208,8 @@
 // ═══════════════════════════════════════
 let currentTab = 'text';
 let currentUser = null; // set by Firebase auth listener
+let lastAnalysedText = ''; // for hashing
+let wasUrlAnalysis = false; // tracks if analysis came from URL tab
 
 // ═══════════════════════════════════════
 // OUTLET NORMALISATION (Option C+A)
@@ -1328,6 +1330,8 @@ async function runAnalysis() {
 
   isAnalysing = true;
   lastRequestTime = Date.now();
+  wasUrlAnalysis = (currentTab === 'url');
+  lastAnalysedText = articleText;
   btn.textContent = 'Analysing…';
   btn.disabled = true;
   btn.style.opacity = '0.7';
@@ -1488,29 +1492,43 @@ function renderResults(data, articleUrl) {
 
   if (dr.emotional_language.flagged_words?.length) highlightChargedWords(dr.emotional_language.flagged_words);
 
-  // Save source banner
+  // Save source banner — URL analyses only
   const outlet = data.outlet;
   const saveContainer = document.getElementById('save-source-container');
   const scoresJson = JSON.stringify(data.scores).replace(/"/g,'&quot;');
 
-  if (outlet) {
+  if (!wasUrlAnalysis) {
+    // Text paste — no Sources saving
+    saveContainer.innerHTML = `
+      <div class="save-source-banner" style="background:var(--grey-light);border-color:#E0E0EA;">
+        <span class="save-source-text" style="color:var(--grey-mid);">ℹ️ Sources tracking is only available for URL-based analyses to ensure outlet accuracy.</span>
+      </div>
+    `;
+  } else if (!outlet) {
+    // URL analysis but outlet not detected
+    saveContainer.innerHTML = `
+      <div class="save-source-banner" style="background:var(--grey-light);border-color:#E0E0EA;">
+        <span class="save-source-text" style="color:var(--grey-mid);">Could not identify the outlet from this URL. Sources not saved.</span>
+      </div>
+    `;
+  } else {
+    // URL analysis with detected outlet — check for duplicate hash first
     saveContainer.innerHTML = `
       <div class="save-source-banner">
         <span class="save-source-text">Add <strong>${outlet}</strong> to your Sources tracker?</span>
         <button class="btn-save-source" id="save-btn" onclick="saveSource('${outlet}', ${scoresJson})">+ Add to Sources</button>
       </div>
     `;
-  } else {
-    saveContainer.innerHTML = `
-      <div class="save-source-banner" style="flex-direction:column;align-items:flex-start;gap:10px;">
-        <span class="save-source-text">Save this source to your tracker? Enter the outlet name:</span>
-        <div style="display:flex;gap:8px;width:100%;flex-wrap:wrap;">
-          <input id="manual-outlet-input" type="text" placeholder="e.g. The Guardian, BBC News…"
-            style="flex:1;min-width:160px;border:1px solid #E0E0EA;border-radius:6px;padding:7px 12px;font-family:'DM Sans',sans-serif;font-size:0.82rem;outline:none;" />
-          <button class="btn-save-source" onclick="saveManualSource(${scoresJson})">+ Add to Sources</button>
-        </div>
-      </div>
-    `;
+    // Async check if already analysed — update banner if duplicate found
+    checkArticleHash(lastAnalysedText).then(alreadyExists => {
+      if (alreadyExists) {
+        saveContainer.innerHTML = `
+          <div class="save-source-banner" style="background:#FFF3E0;border-color:#FFD59E;">
+            <span class="save-source-text" style="color:#E65100;">📊 This article has already been analysed and added to the global database.</span>
+          </div>
+        `;
+      }
+    });
   }
 }
 
@@ -1529,6 +1547,50 @@ function highlightChargedWords(words) {
 }
 
 // ═══════════════════════════════════════
+// ARTICLE HASHING
+// ═══════════════════════════════════════
+function normaliseTextForHash(text) {
+  return text
+    .toLowerCase()
+    .replace(/\s+/g, ' ')
+    .replace(/[^a-z0-9 ]/g, '')
+    .trim()
+    .slice(0, 5000); // use first 5000 chars for consistent fingerprint
+}
+
+async function hashArticle(text) {
+  const normalised = normaliseTextForHash(text);
+  const encoded = new TextEncoder().encode(normalised);
+  const hashBuffer = await crypto.subtle.digest('SHA-256', encoded);
+  const hashArray = Array.from(new Uint8Array(hashBuffer));
+  return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+}
+
+async function checkArticleHash(text) {
+  if (!window._db) return false;
+  try {
+    const hash = await hashArticle(text);
+    const { doc, getDoc } = await import('https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js');
+    const snap = await getDoc(doc(window._db, 'analysed_articles', hash));
+    return snap.exists();
+  } catch(e) {
+    return false; // fail open — don't block saving on hash check failure
+  }
+}
+
+async function writeArticleHash(text, outletKey) {
+  if (!window._db) return;
+  try {
+    const hash = await hashArticle(text);
+    const { doc, setDoc } = await import('https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js');
+    await setDoc(doc(window._db, 'analysed_articles', hash), {
+      outletKey,
+      analysedAt: new Date().toISOString()
+    });
+  } catch(e) { /* non-critical — don't block save if hash write fails */ }
+}
+
+// ═══════════════════════════════════════
 // SAVE SOURCE — Firebase or localStorage
 // ═══════════════════════════════════════
 async function saveSource(displayName, scores) {
@@ -1544,6 +1606,10 @@ async function saveSource(displayName, scores) {
       saveToLocalStorage(key, displayName, scores);
       showBackupBanner();
     }
+
+    // Write article hash to prevent future duplicates
+    await writeArticleHash(lastAnalysedText, key);
+
     const saveContainer = document.getElementById('save-source-container');
     if (saveContainer) {
       saveContainer.innerHTML = `
